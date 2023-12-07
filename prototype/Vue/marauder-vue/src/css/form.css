@@ -1,0 +1,54 @@
+/******************************************
+    Form controls
+******************************************/
+input, select, textarea {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Helvetica, Verdana, sans-serif;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid darkgray;
+    width: 100%;
+}
+
+textarea {
+    min-height: 3em;
+    height: 6em;
+}
+
+input[type='button'], input[type='submit'], input[type='reset'], input[type='checkbox'] {
+    width: auto;
+}
+
+input:focus, select:focus, textarea:focus {
+    box-shadow: 0 0 10px gray;
+}
+
+input:hover, select:hover, textarea:hover {
+    box-shadow: 0 0 10px blue;
+}
+
+input[type=button], input[type=submit], input[type=reset] {
+    margin: 10px 5px;
+}
+
+input[readonly], textarea[readonly] {
+    background-color: lightgoldenrodyellow;
+    border-color: lightgray;
+}
+
+.form-field {
+    margin: 7px 10px;
+}
+
+.buttons-cell {
+    display: flex;
+    justify-content: flex-end;
+}
+
+/*******************************************************/
+/*****    Media Queries for responsiveness         *****/
+/*******************************************************/
+@media screen and (max-width: 768px) {
+    textarea {
+        height: 10em;
+    }
+}

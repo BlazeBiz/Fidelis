@@ -56,7 +56,7 @@ namespace MarauderServer.Controllers
         public ActionResult<Customer> UpdateCustomer(int id, Customer customer)
         {
             // Make sure id matches what is in the interaction
-            if (id != customer.CustomerID)
+            if (id != customer.CustomerId)
             {
                 return BadRequest("Id in URL does not match Id in Body");
             }

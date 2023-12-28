@@ -5,7 +5,7 @@ namespace MarauderServer.Models
     public partial class CustomerAddress
     {
         public int CustomerAddressId { get; set; }
-        public int CustomerID { get; set; }
+        public int CustomerId { get; set; }
         public bool ShipToFlag { get; set; }
         public bool BillToFlag { get; set; }
         public string? ShipToName { get; set; }

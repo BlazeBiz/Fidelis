@@ -1,21 +1,21 @@
 ﻿CREATE PROCEDURE [dbo].[SalesOrderUpdate]
 	@salesOrderJSON nvarchar(max)
 AS
-    Declare @userID INT = 1   -- Stub
+    Declare @userId INT = 1   -- Stub
 Begin
 
     /**********************************************************************************************
     ***                         Prepare parameters and variables                                ***
     **********************************************************************************************/
     BEGIN -- Begin Declare variables and Parse JSON region
-        declare @SalesOrderID int = Convert(int, JSON_VALUE(@salesOrderJSON, '$.SalesOrderID'));
+        declare @SalesOrderId int = Convert(int, JSON_VALUE(@salesOrderJSON, '$.SalesOrderId'));
         declare @SalesOrderNbr nvarchar(30) = TRIM(JSON_VALUE(@salesOrderJSON, '$.SalesOrderNbr'));
-        --declare @CustomerID int = CONVERT(int, JSON_VALUE(@salesOrderJSON, '$.CustomerID'));
+        --declare @CustomerId int = CONVERT(int, JSON_VALUE(@salesOrderJSON, '$.CustomerId'));
         declare @CustomerPurchaseOrderNbr nvarchar(30) = TRIM(JSON_VALUE(@salesOrderJSON, '$.CustomerPurchaseOrderNbr'));
         declare @SalesOrderStatusCd int =  1; -- (Open)  CONVERT(int, JSON_VALUE(@salesOrderJSON, '$.SalesOrderStatusCd'));
         declare @PaymentTermsCd int = CONVERT(int, JSON_VALUE(@salesOrderJSON, '$.PaymentTermsCd'));
-        declare @ShipToAddressID int = CONVERT(int, JSON_VALUE(@salesOrderJSON, '$.ShipToAddressID'));
-        declare @BillToAddressID int = CONVERT(int, JSON_VALUE(@salesOrderJSON, '$.BillToAddressID'));
+        declare @ShipToAddressId int = CONVERT(int, JSON_VALUE(@salesOrderJSON, '$.ShipToAddressId'));
+        declare @BillToAddressId int = CONVERT(int, JSON_VALUE(@salesOrderJSON, '$.BillToAddressId'));
 
         declare @now datetime = getutcdate();
     End -- End Declare variables and Parse JSON region
@@ -28,16 +28,16 @@ Begin
     BEGIN -- Update SalesOrder region
         Update SalesOrder Set
             SalesOrderNbr = @SalesOrderNbr, 
-            -- can't change CustomerID
+            -- can't change CustomerId
             CustomerPurchaseOrderNbr = @CustomerPurchaseOrderNbr, 
             -- can't change OrderDate, 
             SalesOrderStatusCd = @SalesOrderStatusCd, 
             PaymentTermsCd = @PaymentTermsCd, 
-            ShipToAddressID = @ShipToAddressID, 
-            BillToAddressID = @BillToAddressID, 
+            ShipToAddressId = @ShipToAddressId, 
+            BillToAddressId = @BillToAddressId, 
             Modified = @now, 
-            ModifiedBy = @userID
-        Where SalesOrderID = @SalesOrderID
+            ModifiedBy = @userId
+        Where SalesOrderId = @SalesOrderId
     End -- End Update SalesOrder region
 
     /*********************************************************************************************
@@ -49,7 +49,7 @@ Begin
     Commit Transaction
 
     -- Return the modified object
-    Exec dbo.SalesOrderGet @SalesOrderID
+    Exec dbo.SalesOrderGet @SalesOrderId
 
     RETURN 0
 End

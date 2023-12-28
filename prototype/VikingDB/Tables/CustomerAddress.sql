@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[CustomerAddress]
 (
-    [CustomerAddressID] INT NOT NULL PRIMARY KEY IDENTITY(1001, 1), 
-    [CustomerID] INT NOT NULL, 
+    [CustomerAddressId] INT NOT NULL PRIMARY KEY IDENTITY(1001, 1), 
+    [CustomerId] INT NOT NULL, 
     [ShipToFlag] BIT NOT NULL, 
     [BillToFlag] BIT NOT NULL,
     ShipToName varchar(40) NULL,
@@ -15,5 +15,5 @@
     [CreatedBy] INT NOT NULL, 
     [Modified] DATETIME NOT NULL DEFAULT getutcdate(), 
     [ModifiedBy] INT NOT NULL, 
-    CONSTRAINT [FK_CustomerAddress_Customer] FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID)
+    CONSTRAINT [FK_CustomerAddress_Customer] FOREIGN KEY (CustomerId) REFERENCES Customer(CustomerId)
 )

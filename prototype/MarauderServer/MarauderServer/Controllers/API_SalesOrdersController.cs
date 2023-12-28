@@ -17,10 +17,10 @@ namespace MarauderServer.Controllers
         }
 
         // GET: api/Customers
-        [HttpGet("/api/customers/{customerID}/salesorders")]
-        public IEnumerable<SalesOrder> ListForCustomer(int customerID)
+        [HttpGet("/api/customers/{customerId}/salesorders")]
+        public IEnumerable<SalesOrder> ListForCustomer(int customerId)
         {
-            return salesOrderService.ListSalesOrdersForCustomer(customerID);
+            return salesOrderService.ListSalesOrdersForCustomer(customerId);
         }
 
         // GET api/Customers/5
@@ -40,7 +40,7 @@ namespace MarauderServer.Controllers
         public ActionResult<SalesOrder> UpdateSalesOrder(int id, SalesOrder salesOrder)
         {
             // Make sure id matches what is in the interaction
-            if (id != salesOrder.SalesOrderID)
+            if (id != salesOrder.SalesOrderId)
             {
                 return BadRequest("Id in URL does not match Id in Body");
             }

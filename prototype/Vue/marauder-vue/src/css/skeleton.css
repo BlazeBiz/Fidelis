@@ -6,6 +6,7 @@
 .skeleton {
     animation: skeleton-loading 1s linear infinite alternate;
     border-radius: 4px;
+    display: inline-block;
 }
 
 /* .skeleton:nth-child(even) {

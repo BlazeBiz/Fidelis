@@ -1,14 +1,14 @@
 ﻿CREATE PROCEDURE [dbo].[CustomerUpdate]
 	@customerJSON nvarchar(max)
 AS
-    Declare @userID INT = 1   -- Stub
+    Declare @userId INT = 1   -- Stub
 Begin
 
     /**********************************************************************************************
     ***                         Prepare parameters and variables                                ***
     **********************************************************************************************/
     BEGIN -- Begin Declare variables and Parse JSON region
-        declare @CustomerID int = Convert(int, JSON_VALUE(@customerJSON, '$.CustomerID'));
+        declare @CustomerId int = Convert(int, JSON_VALUE(@customerJSON, '$.CustomerId'));
         declare @CustomerName nvarchar(50) = TRIM(JSON_VALUE(@customerJSON, '$.CustomerName'));
         declare @CustomerNbr nvarchar(20) = TRIM(JSON_VALUE(@customerJSON, '$.CustomerNbr'));
         declare @PaymentTerms nvarchar(20) = TRIM(JSON_VALUE(@customerJSON, '$.PaymentTerms'));
@@ -29,8 +29,8 @@ Begin
             PaymentTerms = @PaymentTerms,
             GLLink = @GLLink,
             Modified = @now,
-            ModifiedBy = @userID
-        Where CustomerID = @CustomerID
+            ModifiedBy = @userId
+        Where CustomerId = @CustomerId
     End -- End Update Customer region
 
     /**********************************************************************************************
@@ -64,7 +64,7 @@ Begin
     Commit Transaction
 
     -- Return the modified object
-    Exec dbo.CustomerGet @CustomerID
+    Exec dbo.CustomerGet @CustomerId
 
     RETURN 0
 End

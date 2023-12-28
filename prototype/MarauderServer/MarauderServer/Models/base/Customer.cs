@@ -4,7 +4,7 @@ namespace MarauderServer.Models
 {
     public partial class Customer
     {
-        public int CustomerID { get; set; }
+        public int CustomerId { get; set; }
         public string CustomerName { get; set; } = "";
         public string? CustomerNbr { get; set; }
         public string? PaymentTerms { get; set; }

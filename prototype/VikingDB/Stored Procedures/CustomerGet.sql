@@ -1,13 +1,13 @@
 ﻿-- Get a single Customer. Get the entire object graph
 CREATE PROCEDURE [dbo].[CustomerGet]
-	@customerID int
+	@customerId int
 AS
 
 	-- Customer
-	SELECT * FROM Customer WHERE CustomerID = @customerID
+	SELECT * FROM Customer WHERE CustomerId = @customerId
 
 	-- CustomerAddress
-	SELECT * FROM CustomerAddress WHERE CustomerID = @customerID
+	SELECT * FROM CustomerAddress WHERE CustomerId = @customerId
 
 	-- Could do SalesOrder, but won't do that right now, as that could be a large graph. 
 	-- Plus, GetSalesOrder will probably call this procedure, so we don't want to recurse.

@@ -13,7 +13,7 @@ namespace MarauderServer.Data
         internal override void RowToObject(SqlDataReader row, CustomerAddress obj)
         {
             obj.CustomerAddressId = Int32PropertyFromRow(row, "CustomerAddressId");
-            obj.CustomerID = Int32PropertyFromRow(row, "CustomerID");
+            obj.CustomerId = Int32PropertyFromRow(row, "CustomerId");
             obj.ShipToFlag = BoolPropertyFromRow(row, "ShipToFlag");
             obj.BillToFlag = BoolPropertyFromRow(row, "BillToFlag");
             obj.ShipToName = StringNullablePropertyFromRow(row, "ShipToName");
@@ -35,7 +35,7 @@ namespace MarauderServer.Data
             List<string>? bindNames = null;
             if (parametersToBind != null) bindNames = new List<string>(parametersToBind);
             if (bindNames == null || bindNames.Contains("CustomerAddressId")) sqlParameters.AddWithValue("@CustomerAddressId", obj.CustomerAddressId);
-            if (bindNames == null || bindNames.Contains("CustomerID")) sqlParameters.AddWithValue("@CustomerID", obj.CustomerID);
+            if (bindNames == null || bindNames.Contains("CustomerId")) sqlParameters.AddWithValue("@CustomerId", obj.CustomerId);
             if (bindNames == null || bindNames.Contains("ShipToFlag")) sqlParameters.AddWithValue("@ShipToFlag", obj.ShipToFlag);
             if (bindNames == null || bindNames.Contains("BillToFlag")) sqlParameters.AddWithValue("@BillToFlag", obj.BillToFlag);
             if (bindNames == null || bindNames.Contains("ShipToName")) sqlParameters.AddWithValue("@ShipToName", obj.ShipToName);

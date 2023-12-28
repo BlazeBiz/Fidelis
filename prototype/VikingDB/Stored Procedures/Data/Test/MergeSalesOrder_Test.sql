@@ -4,15 +4,15 @@ SET NOCOUNT ON
 
 Declare @table TABLE
 (
-	[SalesOrderID] INT NOT NULL PRIMARY KEY IDENTITY(1, 1), 
+	[SalesOrderId] INT NOT NULL PRIMARY KEY IDENTITY(1, 1), 
     [SalesOrderNbr] VARCHAR(30) NULL, 
-    [CustomerID] INT NOT NULL, 
+    [CustomerId] INT NOT NULL, 
     [CustomerPurchaseOrderNbr] VARCHAR(30) NULL, 
     [OrderDate] DATE NOT NULL DEFAULT getdate(), 
     [SalesOrderStatusCd] INT NOT NULL DEFAULT 1, -- 1 open, 2 complete, 3 cancelled
     [PaymentTermsCd] INT NULL, 
-    [ShipToAddressID] INT NULL, 
-    [BillToAddressID] INT NULL
+    [ShipToAddressId] INT NULL, 
+    [BillToAddressId] INT NULL
 )
 
 Insert @table Values
@@ -37,23 +37,23 @@ SET IDENTITY_INSERT SalesOrder ON
 MERGE INTO SalesOrder AS [Target]
 USING
  (SELECT * from @table) AS [Source]
-ON (Target.SalesOrderID = Source.SalesOrderID)
+ON (Target.SalesOrderId = Source.SalesOrderId)
 WHEN MATCHED Then
  UPDATE SET
 	SalesOrderNbr = Source.SalesOrderNbr,
-	CustomerID    = Source.CustomerID,
+	CustomerId    = Source.CustomerId,
 	CustomerPurchaseOrderNbr = Source.CustomerPurchaseOrderNbr,
 	OrderDate     = Source.OrderDate,
 	SalesOrderStatusCd = Source.SalesOrderStatusCd,
 	PaymentTermsCd = Source.PaymentTermsCd,
-	ShipToAddressID = Source.ShipToAddressID,
-	BillToAddressID = Source.BillToAddressID,
+	ShipToAddressId = Source.ShipToAddressId,
+	BillToAddressId = Source.BillToAddressId,
 	Modified     = getutcdate()
 
 WHEN NOT MATCHED BY TARGET THEN
- INSERT(SalesOrderID, SalesOrderNbr, CustomerID, CustomerPurchaseOrderNbr, OrderDate, SalesOrderStatusCd, PaymentTermsCd, ShipToAddressID, BillToAddressID, Created, CreatedBy, Modified, ModifiedBy)
- VALUES(Source.SalesOrderID, Source.SalesOrderNbr, Source.CustomerID, Source.CustomerPurchaseOrderNbr, Source.OrderDate, Source.SalesOrderStatusCd, Source.PaymentTermsCd, Source.ShipToAddressID, Source.BillToAddressID, getutcdate(), 1, getutcdate(), 1)
-WHEN NOT MATCHED BY SOURCE AND Target.SalesOrderID <= 1000 THEN 
+ INSERT(SalesOrderId, SalesOrderNbr, CustomerId, CustomerPurchaseOrderNbr, OrderDate, SalesOrderStatusCd, PaymentTermsCd, ShipToAddressId, BillToAddressId, Created, CreatedBy, Modified, ModifiedBy)
+ VALUES(Source.SalesOrderId, Source.SalesOrderNbr, Source.CustomerId, Source.CustomerPurchaseOrderNbr, Source.OrderDate, Source.SalesOrderStatusCd, Source.PaymentTermsCd, Source.ShipToAddressId, Source.BillToAddressId, getutcdate(), 1, getutcdate(), 1)
+WHEN NOT MATCHED BY SOURCE AND Target.SalesOrderId <= 1000 THEN 
  DELETE
 ;
 SET IDENTITY_INSERT SalesOrder OFF

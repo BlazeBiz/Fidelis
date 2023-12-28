@@ -29,24 +29,24 @@ namespace MarauderServer.Data
 
                 // Build a dictionary for temporary use
                 Dictionary<int, Customer> dictionary = new Dictionary<int, Customer>(
-                    customers.Select<Customer, KeyValuePair<int, Customer>>(c => new KeyValuePair<int, Customer>(c.CustomerID, c))
+                    customers.Select<Customer, KeyValuePair<int, Customer>>(c => new KeyValuePair<int, Customer>(c.CustomerId, c))
                 );
 
                 // Go through each Sales Order and assign the salesOrder
                 foreach (SalesOrder salesOrder in salesOrders)
                 {
-                    if (dictionary.ContainsKey(salesOrder.CustomerID))
+                    if (dictionary.ContainsKey(salesOrder.CustomerId))
                     {
                         // Find the associated salesOrder object
-                        salesOrder.Customer = dictionary[salesOrder.CustomerID];
+                        salesOrder.Customer = dictionary[salesOrder.CustomerId];
 
                         // Find the addresses in the salesOrder address array, and set shipto and billto
                         if (salesOrder.Customer.CustomerAddresses != null)
                         {
                             salesOrder.ShipToAddress =
-                                salesOrder.Customer.CustomerAddresses.FirstOrDefault<CustomerAddress>(ca => ca.CustomerAddressId == salesOrder.ShipToAddressID);
+                                salesOrder.Customer.CustomerAddresses.FirstOrDefault<CustomerAddress>(ca => ca.CustomerAddressId == salesOrder.ShipToAddressId);
                             salesOrder.BillToAddress =
-                                salesOrder.Customer.CustomerAddresses.FirstOrDefault<CustomerAddress>(ca => ca.CustomerAddressId == salesOrder.BillToAddressID);
+                                salesOrder.Customer.CustomerAddresses.FirstOrDefault<CustomerAddress>(ca => ca.CustomerAddressId == salesOrder.BillToAddressId);
                         }
                     }
                 }
@@ -59,11 +59,11 @@ namespace MarauderServer.Data
         /// Returns all salesOrders for a salesOrder
         /// </summary>
         /// <returns>List of salesOrder objects for a salesOrder</returns>
-        public IEnumerable<SalesOrder> ListSalesOrdersForCustomer(int customerID)
+        public IEnumerable<SalesOrder> ListSalesOrdersForCustomer(int customerId)
         {
             SqlCommand cmd = new SqlCommand("SalesOrderListForCustomer");
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@customerID", customerID);
+            cmd.Parameters.AddWithValue("@customerId", customerId);
             return GetList(cmd, "ListSalesOrdersForCustomer");
         }
 
@@ -71,11 +71,11 @@ namespace MarauderServer.Data
         /// Returns one salesOrder by ID
         /// </summary>
         /// <returns>A salesOrder object, NULL if not found</returns>
-        public SalesOrder? GetSalesOrder(int salesOrderID)
+        public SalesOrder? GetSalesOrder(int salesOrderId)
         {
             SqlCommand cmd = new SqlCommand("SalesOrderGet");
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@salesOrderID", salesOrderID);
+            cmd.Parameters.AddWithValue("@salesOrderId", salesOrderId);
             return this.GetObject(cmd, "GetSalesOrder");
         }
 

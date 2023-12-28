@@ -16,6 +16,12 @@ export default {
     getCustomerById(customerId) {
         return this.httpGetPromise(`${this.baseUrl}/customers/${customerId}`);
     },
+    /************************************************************
+     * updateCustomer
+     ***********************************************************/
+    updateCustomer(customer) {
+        return this.httpPutPromise(`${this.baseUrl}/customers/${customer.customerId}`, customer);
+    },
 
 
 
@@ -57,12 +63,6 @@ export default {
         return this.httpPostPromise(`${this.baseUrl}/portfolios`, newPortfolio);
     },
 
-    /************************************************************
-     * updatePortfolio
-     ***********************************************************/
-    updatePortfolio(portfolio) {
-        return this.httpPutPromise(`${this.baseUrl}/portfolios/${portfolio.portfolioId}`, portfolio);
-    },
 
     /************************************************************
      * addPersonalOrganization

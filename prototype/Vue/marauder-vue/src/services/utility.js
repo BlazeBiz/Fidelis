@@ -10,14 +10,14 @@ export default {
     },
     dateOptions: {
         year: 'numeric',
-        month: '2-digit',
+        month: 'numeric',
         day: '2-digit',
     },
     timeOptions: {
-        hour: '2-digit',
+        hour: 'numeric',
         minute: '2-digit',
         second: '2-digit',
-        hour12: false,
+        hour12: true,
     },
     colorDefaults: {
         "--body-bg-1": "#ffffff",
@@ -54,12 +54,14 @@ export default {
         // This may be where the problem is...when we create the date, what timezone is it?
         if (!date) return "";
         let d = new Date(date);
+        // let d = new Date(Date.parse(date + "+00:00"));
         return d.toLocaleDateString([], this.dateOptions);
     },
 
     formatDateTime(date) {
         if (!date) return "";
-        let d = new Date(date);
+        // let d = new Date(date);
+        let d = new Date(Date.parse(date + "+00:00"));
         return d.toLocaleDateString([], this.dateOptions) + " " + d.toLocaleTimeString([], this.timeOptions);
     },
 

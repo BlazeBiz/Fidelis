@@ -12,14 +12,14 @@ namespace MarauderServer.Services
             this.SalesOrderData = SalesOrderData;
         }
 
-        public SalesOrder? GetSalesOrder(int SalesOrderID)
+        public SalesOrder? GetSalesOrder(int SalesOrderId)
         {
-            return SalesOrderData.GetSalesOrder(SalesOrderID);
+            return SalesOrderData.GetSalesOrder(SalesOrderId);
         }
 
-        public IEnumerable<SalesOrder> ListSalesOrdersForCustomer(int customerID)
+        public IEnumerable<SalesOrder> ListSalesOrdersForCustomer(int customerId)
         {
-            return SalesOrderData.ListSalesOrdersForCustomer(customerID);
+            return SalesOrderData.ListSalesOrdersForCustomer(customerId);
         }
         public SalesOrder? UpdateSalesOrder(SalesOrder SalesOrder)
         {

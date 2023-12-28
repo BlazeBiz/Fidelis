@@ -20,7 +20,7 @@
 
         <div id="resultsArea" v-if="showResults">
             <h1>Results</h1>
-            <div id="results-table" class="gridtable gridtable-4">
+            <div id="results-table" class="gridtable gridtable-5">
                 <div class="col hdg">
                     Customer name
                 </div>
@@ -36,6 +36,9 @@
                 <div class="col hdg">
                     GL link
                 </div>
+                <div class="col hdg">
+                    Actions
+                </div>
                 <!-- **************** Skeleton ************************ -->
                 <template v-if="isLoading">
                     <template v-for="n in 3" :key="n">
@@ -47,16 +50,20 @@
                     </template>
                 </template>
                 <template v-else>
-                    <template v-for="c in customers" :key="c.customerID">
+                    <template v-for="c in customers" :key="c.customerId">
                         <div class="col">
-                            {{ c.customerName }}
-                            <!-- <router-link :to="{ name: 'portfolio', params: { id: p.portfolioId } }">
-                                {{ p.portfolioName }}
-                            </router-link> -->
+                            <router-link :to="{ name: 'CustomerDetails', params: { id: c.customerId } }">
+                                {{ c.customerName }}
+                            </router-link>
                         </div>
                         <div class="col">{{ c.customerNbr }}</div>
                         <div class="col">{{ c.paymentTerms }}</div>
                         <div class="col">{{c.GLLink}}</div>
+                        <div class="col">
+                            <!-- TODO: font-awesome icons here -->
+                            <router-link :to="{ name: 'CustomerDetails', params: { id: c.customerId } }">view</router-link>
+                            | <router-link :to="{ name: 'CustomerEdit', params: { id: c.customerId } }">edit</router-link>
+                        </div>
                     </template>
                 </template>
             </div>
@@ -70,7 +77,7 @@
 </template>
 
 <script>
-import apiService from '/services/apiService.js'
+import apiService from '@/services/apiService.js'
 export default {
     name: "CustomerSearchView",
     components: {
@@ -78,8 +85,8 @@ export default {
     data() {
         return {
             isLoading: false,
-            searchField: 'name',
-            searchType: 'contains',
+            searchField: '',
+            searchType: '',
             searchValue: '',
             showResults: false,
             customers: [],
@@ -98,8 +105,21 @@ export default {
             apiService.searchCustomers(this.searchField, this.searchType, this.searchValue).then(resp => {
                 this.isLoading = false;
                 this.customers = resp.data;
+                // Update the route
+                this.$router.replace({name: 'CustomerSearch', query: { searchType: this.searchType, searchField: this.searchField, searchValue: this.searchValue}});
             });
         },
+    },
+    created() {
+        // Fill in search parameters from routexxx
+        this.searchType = this.$route.query.searchType || 'contains';
+        this.searchField = this.$route.query.searchField || 'name';
+        this.searchValue = this.$route.query.searchValue || '';
+
+        if (this.searchValue) {
+            this.search();
+        }
+
     },
 
 };

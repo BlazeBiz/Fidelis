@@ -22,7 +22,7 @@ namespace MarauderServer.Data
 
             // Build a dictionary for temporary use
             Dictionary<int, Customer> dictionary = new Dictionary<int, Customer>(
-                customers.Select<Customer, KeyValuePair<int, Customer>>(c => new KeyValuePair<int, Customer>(c.CustomerID, c))
+                customers.Select<Customer, KeyValuePair<int, Customer>>(c => new KeyValuePair<int, Customer>(c.CustomerId, c))
             );
 
             // Get the Addresses, and assign each to a Customer
@@ -33,7 +33,7 @@ namespace MarauderServer.Data
                 foreach (CustomerAddress address in addresses)
                 {
                     // Find the customer and add it to the addresses collection
-                    Customer customer = dictionary[address.CustomerID];
+                    Customer customer = dictionary[address.CustomerId];
                     if (customer.CustomerAddresses == null) customer.CustomerAddresses = new List<CustomerAddress>();
                     customer.CustomerAddresses.Add(address);
                 }
@@ -84,11 +84,11 @@ namespace MarauderServer.Data
         /// Returns one customer by ID
         /// </summary>
         /// <returns>A Customer object, NULL if not found</returns>
-        public Customer? GetCustomer(int customerID)
+        public Customer? GetCustomer(int customerId)
         {
             SqlCommand cmd = new SqlCommand("CustomerGet");
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@customerID", customerID);
+            cmd.Parameters.AddWithValue("@customerId", customerId);
             return this.GetObject(cmd, "GetCustomer");
         }
 

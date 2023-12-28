@@ -75,6 +75,7 @@ export default {
 
        -->
     <nav id="nav">
+      <!-- TODO: Make this data driven with collapsible sections -->
       <div>
         <router-link :to="{ name: 'Home' }">Home</router-link>
       </div>

@@ -1,24 +1,72 @@
 <template>
   <div id="customer-details">
-    <h1>Customer Details</h1>
-    <h2>{{ customer.customerName }}</h2>
+    <h1>View Customer</h1>
+    <h2 v-if="isLoading" class="skeleton skeleton-text"></h2>
+    <h2 v-else>{{ customer.customerName }}</h2>
     <section id="main-grid">
-        <div class="gridtable standard-form gridlines shadow" id="customer-form">
-          <div>Customer id:</div>
-          <div>{{ customer.customerID }}</div>
-          <div>Customer name:</div>
-          <div>{{ customer.customerName }}</div>
-          <div>Customer number:</div>
-          <div>{{ customer.customerNbr }}</div>
-        </div>
-        <br />
-        <!-- =====================================================  -->
+      <div class="gridtable standard-form gridlines" id="customer-form">
+        <div class="col">Customer id:</div>
+        <div class="col" v-if="isLoading"><div class="skeleton skeleton-text"></div></div>
+        <div class="col" v-else>{{ customer.customerId }}</div>
+        <div class="col">Customer name:</div>
+        <div class="col" v-if="isLoading"><div class="skeleton skeleton-text"></div></div>
+        <div class="col" v-else>{{ customer.customerName }}</div>
+        <div class="col">Customer number:</div>
+        <div class="col" v-if="isLoading"><div class="skeleton skeleton-text"></div></div>
+        <div class="col" v-else>{{ customer.customerNbr }}</div>
+        <div class="col">Created on:</div>
+        <div class="col" v-if="isLoading"><div class="skeleton skeleton-text"></div></div>
+        <div class="col" v-else>{{ formatDateTime(customer.created) }} by {{ customer.createdBy }}</div>
+        <div class="col">Modified on:</div>
+        <div class="col" v-if="isLoading"><div class="skeleton skeleton-text"></div></div>
+        <div class="col" v-else>{{ formatDateTime(customer.modified) }} by {{ customer.modifiedBy }}</div>
+      </div>
     </section>
+
+    <section id="address-grid">
+      <h3>Addresses</h3>
+      <div class="gridtable gridtable-5" id="address-table">
+        <div class="col hdg">
+          <p>Address</p>
+        </div>
+        <div class="col hdg">
+          <p>City</p>
+        </div>
+        <div class="col hdg">
+          <p>State</p>
+        </div>
+        <div class="col hdg">
+          <p>ZIP</p>
+        </div>
+        <div class="col hdg">
+          <p>Type</p>
+        </div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <template v-for="add in customer.customerAddresses">
+          <div class="col" v-html="addressHTML(add)"></div>
+          <div class="col">{{ add.city }}</div>
+          <div class="col">{{ add.stateCD }}</div>
+          <div class="col">{{ add.zipCode }}</div>
+          <div class="col">
+            <input type="checkbox" disabled v-model="add.shipToFlag" /> Shipping <br />
+            <input type="checkbox" disabled v-model="add.billToFlag" /> Billing
+          </div>
+        </template>
+      </div>
+    </section>
+    <!-- =====================================================  -->
+    <br />
+    <router-link v-if="customer" :to="{name: 'CustomerEdit', params: {id: customer.customerId}}">Edit customer</router-link>
   </div>
 </template>
   
 <script>
-import apiService from '/services/apiService.js'
+import apiService from '@/services/apiService.js'
+import utility from "@/services/utility.js";
 export default {
   components: {
   },
@@ -42,8 +90,19 @@ export default {
         this.isLoading = false;
         this.customer = resp.data;
       });
+    },
+    formatDateTime(date) {
+      return utility.formatDateTime(date);
+    },
+    addressHTML(add) {
+      let a = add.addressLine1;
+      if (add.addressLine2) a += "<br />" + add.addressLine2;
+      if (add.addressLine3) a += "<br />" + add.addressLine3;
+      return a;
+    },
+    addressTypeHTML(add) {
 
-    }
+    },
   },
   created() {
     this.refreshPage();
@@ -58,53 +117,12 @@ export default {
 
 <style scoped>
 /* Grid column widths */
-#status-table.gridtable.gridtable-2 {
-  grid-template-columns: 1fr 180px;
+#address-table.gridtable.gridtable-5 {
+  grid-template-columns: 1fr minmax(150px, auto) 120px 120px 150px;
+  margin: 0 100px;
 }
-
-#milestone-table.gridtable.gridtable-4 {
-  grid-template-columns: 1fr 120px 180px 180px;
-}
-
-#milestone-table.gridtable.gridtable-6 {
-  grid-template-columns: 35px 1fr 120px 180px 180px 50px;
-}
-
-#risk-table.gridtable.gridtable-4 {
-  grid-template-columns: auto auto auto 180px;
-}
-
-#risk-table.gridtable.gridtable-6 {
-  grid-template-columns: 35px 2fr 1fr 2fr 180px 50px;
-}
-
-#milestone-table-title,
-#risk-table-title {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-section.project-info {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  column-gap: 40px;
-}
-section.project-info > div {
-  display: inline-block;
-}
-
-section.project-info .label {
-  font-weight: bold;
-  font-size: 0.9rem;
-  color: var(--body-text-fg);
-}
-
-section.project-info .field {
-  font-size: 0.9rem;
-  color: var(--heading-fg);
+div#customer-details {
+  min-width: 1000px;
 }
 
 section#main-grid {
@@ -117,43 +135,8 @@ section#main-grid {
   padding-left: 5px;
 }
 
-.gridtable {
-  font-size: 0.9em;
-}
-
-#project-form {
-  margin-bottom: 25px;
-}
 a {
   font-weight: bold;
-}
-
-.psuedo-row {
-  min-height: 25px;
-}
-
-div.fas.fa-grip-vertical {
-  border: 1px solid black;
-  padding: 4px;
-  border-right: none;
-  border-radius: 5px 0 0 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: grab;
-}
-
-div.fas.fa-grip-vertical:active {
-  cursor: grabbing;
-}
-
-div.col.drag-over {
-  border-top: 6px solid deepskyblue;
-}
-
-#health-table-narrow,
-#health-table-narrow-spacer {
-  display: none;
 }
 
 @media screen and (max-width: 1200px) {
@@ -161,19 +144,6 @@ div.col.drag-over {
     grid-template-columns: 1fr;
     margin: 20px 10px 10px 10px;
     gap: 0px;
-  }
-
-  #health-table-wide,
-  #health-table-wide-spacer {
-    display: none;
-  }
-
-  #health-table-narrow {
-    display: grid;
-  }
-
-  #health-table-narrow-spacer {
-    display: initial;
   }
 }
 </style>

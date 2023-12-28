@@ -12,7 +12,7 @@ namespace MarauderServer.Data
 
         internal override void RowToObject(SqlDataReader row, Customer obj)
         {
-            obj.CustomerID = Int32PropertyFromRow(row, "CustomerID");
+            obj.CustomerId = Int32PropertyFromRow(row, "CustomerId");
             obj.CustomerName = StringPropertyFromRow(row, "CustomerName");
             obj.CustomerNbr = StringNullablePropertyFromRow(row, "CustomerNbr");
             obj.PaymentTerms = StringNullablePropertyFromRow(row, "PaymentTerms");
@@ -28,7 +28,7 @@ namespace MarauderServer.Data
         {
             List<string>? bindNames = null;
             if (parametersToBind != null) bindNames = new List<string>(parametersToBind);
-            if (bindNames == null || bindNames.Contains("CustomerID")) sqlParameters.AddWithValue("@CustomerID", obj.CustomerID);
+            if (bindNames == null || bindNames.Contains("CustomerId")) sqlParameters.AddWithValue("@CustomerId", obj.CustomerId);
             if (bindNames == null || bindNames.Contains("CustomerName")) sqlParameters.AddWithValue("@CustomerName", obj.CustomerName);
             if (bindNames == null || bindNames.Contains("CustomerNbr")) sqlParameters.AddWithValue("@CustomerNbr", obj.CustomerNbr);
             if (bindNames == null || bindNames.Contains("PaymentTerms")) sqlParameters.AddWithValue("@PaymentTerms", obj.PaymentTerms);

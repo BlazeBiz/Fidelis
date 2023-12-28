@@ -1,21 +1,21 @@
 ﻿CREATE PROCEDURE [dbo].[SalesOrderAdd]
 	@salesOrderJSON nvarchar(max)
 AS
-    Declare @userID INT = 1   -- Stub
+    Declare @userId INT = 1   -- Stub
 Begin
 
     /**********************************************************************************************
     ***                         Prepare parameters and variables                                ***
     **********************************************************************************************/
     BEGIN -- Begin Declare variables and Parse JSON region
-        declare @SalesOrderID int;
+        declare @SalesOrderId int;
         declare @SalesOrderNbr nvarchar(30) = TRIM(JSON_VALUE(@salesOrderJSON, '$.SalesOrderNbr'));
-        declare @CustomerID int = CONVERT(int, JSON_VALUE(@salesOrderJSON, '$.CustomerID'));
+        declare @CustomerId int = CONVERT(int, JSON_VALUE(@salesOrderJSON, '$.CustomerId'));
         declare @CustomerPurchaseOrderNbr nvarchar(30) = TRIM(JSON_VALUE(@salesOrderJSON, '$.CustomerPurchaseOrderNbr'));
         declare @SalesOrderStatusCd int =  1; -- (Open)  CONVERT(int, JSON_VALUE(@salesOrderJSON, '$.SalesOrderStatusCd'));
         declare @PaymentTermsCd int = CONVERT(int, JSON_VALUE(@salesOrderJSON, '$.PaymentTermsCd'));
-        declare @ShipToAddressID int = CONVERT(int, JSON_VALUE(@salesOrderJSON, '$.ShipToAddressID'));
-        declare @BillToAddressID int = CONVERT(int, JSON_VALUE(@salesOrderJSON, '$.BillToAddressID'));
+        declare @ShipToAddressId int = CONVERT(int, JSON_VALUE(@salesOrderJSON, '$.ShipToAddressId'));
+        declare @BillToAddressId int = CONVERT(int, JSON_VALUE(@salesOrderJSON, '$.BillToAddressId'));
 
         declare @now datetime = getutcdate();
     End -- End Declare variables and Parse JSON region
@@ -29,34 +29,34 @@ Begin
     BEGIN -- Insert Customer region
         INSERT INTO SalesOrder (
             SalesOrderNbr, 
-            CustomerID, 
+            CustomerId, 
             CustomerPurchaseOrderNbr, 
             OrderDate, 
             SalesOrderStatusCd, 
             PaymentTermsCd, 
-            ShipToAddressID, 
-            BillToAddressID, 
+            ShipToAddressId, 
+            BillToAddressId, 
             Created, 
             CreatedBy,
             Modified, 
             ModifiedBy
         ) VALUES (
             @SalesOrderNbr, 
-            @CustomerID, 
+            @CustomerId, 
             @CustomerPurchaseOrderNbr, 
             @now, 
             @SalesOrderStatusCd, 
             @PaymentTermsCd, 
-            @ShipToAddressID, 
-            @BillToAddressID, 
+            @ShipToAddressId, 
+            @BillToAddressId, 
             @now, 
-            @userID, 
+            @userId, 
             @now, 
-            @userID
+            @userId
         );
     End -- End Update Customer region
 
-    SELECT @SalesOrderID = @@IDENTITY;
+    SELECT @SalesOrderId = @@IDENTITY;
 
     /**********************************************************************************************
     ***                          Other associate tables...                                      ***
@@ -68,7 +68,7 @@ Begin
     Commit Transaction
 
     -- Return the modified object
-    Exec dbo.SalesOrderGet @SalesOrderID
+    Exec dbo.SalesOrderGet @SalesOrderId
 
     RETURN 0
 End

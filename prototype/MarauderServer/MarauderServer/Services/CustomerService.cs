@@ -12,9 +12,9 @@ namespace MarauderServer.Services
             this.customerData = customerData;
         }
 
-        public Customer? GetCustomer(int customerID)
+        public Customer? GetCustomer(int customerId)
         {
-            return customerData.GetCustomer(customerID);
+            return customerData.GetCustomer(customerId);
         }
 
         public IEnumerable<Customer> ListCustomers(string searchField, string searchType, string searchValue)

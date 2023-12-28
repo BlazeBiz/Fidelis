@@ -1,18 +1,18 @@
 ﻿-- Get a single SalesOrder. Get the entire object graph
 CREATE PROCEDURE [dbo].[SalesOrderGet]
-	@salesOrderID int
+	@salesOrderId int
 AS
 
 	-- SalesOrder
-	SELECT * FROM SalesOrder WHERE SalesOrderID = @salesOrderID;
+	SELECT * FROM SalesOrder WHERE SalesOrderId = @salesOrderId;
 
 	if @@ROWCOUNT = 1
 	BEGIN
 		-- There was an order. Get the customer information
-		DECLARE @customerID int 
-		SELECT @customerID = CustomerID FROM SalesOrder WHERE SalesOrderID = @salesOrderID;
+		DECLARE @customerId int 
+		SELECT @customerId = CustomerId FROM SalesOrder WHERE SalesOrderId = @salesOrderId;
 		-- Get Customer and CustomerAddress
-		exec CustomerGet @customerID
+		exec CustomerGet @customerId
 
 	END
 RETURN 0

@@ -4,7 +4,7 @@ SET NOCOUNT ON
 
 Declare @table TABLE
 (
-	[CustomerID] INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
+	[CustomerId] INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
     [CustomerName] VARCHAR(50) NOT NULL, 
     [CustomerNbr] VARCHAR(20) NULL, 
     [PaymentTerms] VARCHAR(20) NULL, 
@@ -20,8 +20,8 @@ Insert @table Values
 
 Declare @addressTable TABLE
 (
-    [CustomerAddressID] INT NOT NULL PRIMARY KEY IDENTITY(1, 1), 
-    [CustomerID] INT NOT NULL, 
+    [CustomerAddressId] INT NOT NULL PRIMARY KEY IDENTITY(1, 1), 
+    [CustomerId] INT NOT NULL, 
     [ShipToFlag] BIT NOT NULL, 
     [BillToFlag] BIT NOT NULL,
     ShipToName varchar(40) NULL,
@@ -54,8 +54,8 @@ Insert @addressTable Values
 BEGIN TRANSACTION
 -- Prevent RI conflicts on a delete of customers by removing Addresses for those to be deleted
 DELETE FROM CustomerAddress
-    WHERE CustomerID <= 1000
-      AND CustomerID NOT IN (SELECT DISTINCT CustomerID from @table)
+    WHERE CustomerId <= 1000
+      AND CustomerId NOT IN (SELECT DISTINCT CustomerId from @table)
 
 ------------------------------------------------------------------------------------------------------------
 -- Merge Customer
@@ -64,7 +64,7 @@ SET IDENTITY_INSERT Customer ON
 MERGE INTO Customer AS [Target]
 USING
  (SELECT * from @table) AS [Source]
-ON (Target.CustomerID = Source.CustomerID)
+ON (Target.CustomerId = Source.CustomerId)
 WHEN MATCHED Then
  UPDATE SET
 	CustomerName = Source.CustomerName,
@@ -74,9 +74,9 @@ WHEN MATCHED Then
 	Modified     = getutcdate()
 
 WHEN NOT MATCHED BY TARGET THEN
- INSERT(CustomerID, CustomerName, CustomerNbr, PaymentTerms, GLLink, Created, CreatedBy, Modified, ModifiedBy)
- VALUES(Source.CustomerID, Source.CustomerName, Source.CustomerNbr, Source.PaymentTerms, Source.GLLink, getutcdate(), 1, getutcdate(), 1)
-WHEN NOT MATCHED BY SOURCE AND Target.CustomerID <= 1000 THEN 
+ INSERT(CustomerId, CustomerName, CustomerNbr, PaymentTerms, GLLink, Created, CreatedBy, Modified, ModifiedBy)
+ VALUES(Source.CustomerId, Source.CustomerName, Source.CustomerNbr, Source.PaymentTerms, Source.GLLink, getutcdate(), 1, getutcdate(), 1)
+WHEN NOT MATCHED BY SOURCE AND Target.CustomerId <= 1000 THEN 
  DELETE
 ;
 SET IDENTITY_INSERT Customer OFF
@@ -101,10 +101,10 @@ SET IDENTITY_INSERT CustomerAddress ON
 MERGE INTO CustomerAddress AS [Target]
 USING
  (SELECT * from @addressTable) AS [Source]
-ON (Target.CustomerAddressID = Source.CustomerAddressID)
+ON (Target.CustomerAddressId = Source.CustomerAddressId)
 WHEN MATCHED Then
  UPDATE SET
-	CustomerID  = Source.CustomerID,
+	CustomerId  = Source.CustomerId,
 	ShipToFlag  = Source.ShipToFlag,
 	BillToFlag  = Source.BillToFlag,
 	ShipToName  = Source.ShipToName,
@@ -118,10 +118,10 @@ WHEN MATCHED Then
 
 
 WHEN NOT MATCHED BY TARGET THEN
- INSERT(CustomerAddressID, CustomerID, ShipToFlag, BillToFlag, ShipToName, AddressLine1, AddressLine2, AddressLine3, City, StateCD, ZipCode, Created, CreatedBy, Modified, ModifiedBy)
- VALUES(Source.CustomerAddressID, Source.CustomerID, Source.ShipToFlag, Source.BillToFlag, Source.ShipToName, 
+ INSERT(CustomerAddressId, CustomerId, ShipToFlag, BillToFlag, ShipToName, AddressLine1, AddressLine2, AddressLine3, City, StateCD, ZipCode, Created, CreatedBy, Modified, ModifiedBy)
+ VALUES(Source.CustomerAddressId, Source.CustomerId, Source.ShipToFlag, Source.BillToFlag, Source.ShipToName, 
 	Source.AddressLine1, Source.AddressLine2, Source.AddressLine3, Source.City, Source.StateCD, Source.ZipCode, getutcdate(), 1, getutcdate(), 1)
-WHEN NOT MATCHED BY SOURCE AND Target.CustomerAddressID <= 1000 THEN 
+WHEN NOT MATCHED BY SOURCE AND Target.CustomerAddressId <= 1000 THEN 
  DELETE
 ;
 SET IDENTITY_INSERT CustomerAddress OFF

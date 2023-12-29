@@ -1,14 +1,14 @@
 <template>
     <div id="customer-view">
-      <customer-edit :customer-id="customerId" />
+      <customer-form :customer-id="customerId" mode="edit"/>
     </div>
   </template>
   
   <script>
-  import CustomerEdit from "../components/CustomerEdit.vue";
+  import CustomerForm from "../components/CustomerForm.vue";
   export default {
     components: {
-      CustomerEdit,
+      CustomerForm,
     },
     name: "CustomerEditView",
     data() {

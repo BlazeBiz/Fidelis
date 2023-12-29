@@ -99,7 +99,7 @@ import utility from "@/services/utility.js";
 export default {
   components: {
   },
-  name: "CustomerEdit",
+  name: "CustomerForm",
   props: {
     customerId: {
       type: Number,

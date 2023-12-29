@@ -21,12 +21,15 @@ namespace MarauderServer.Data
             obj.AddressLine2 = StringNullablePropertyFromRow(row, "AddressLine2");
             obj.AddressLine3 = StringNullablePropertyFromRow(row, "AddressLine3");
             obj.City = StringNullablePropertyFromRow(row, "City");
-            obj.StateCD = StringNullablePropertyFromRow(row, "StateCD");
+            obj.StateCode = StringNullablePropertyFromRow(row, "StateCode");
             obj.ZipCode = StringNullablePropertyFromRow(row, "ZipCode");
             obj.Created = DateTimePropertyFromRow(row, "Created");
             obj.CreatedBy = Int32PropertyFromRow(row, "CreatedBy");
             obj.Modified = DateTimePropertyFromRow(row, "Modified");
             obj.ModifiedBy = Int32PropertyFromRow(row, "ModifiedBy");
+            obj.IsDeleted = BoolPropertyFromRow(row, "IsDeleted");
+            obj.Deleted = DateTimeNullablePropertyFromRow(row, "Deleted");
+            obj.DeletedBy = Int32NullablePropertyFromRow(row, "DeletedBy");
 
         }
         
@@ -43,12 +46,15 @@ namespace MarauderServer.Data
             if (bindNames == null || bindNames.Contains("AddressLine2")) sqlParameters.AddWithValue("@AddressLine2", obj.AddressLine2);
             if (bindNames == null || bindNames.Contains("AddressLine3")) sqlParameters.AddWithValue("@AddressLine3", obj.AddressLine3);
             if (bindNames == null || bindNames.Contains("City")) sqlParameters.AddWithValue("@City", obj.City);
-            if (bindNames == null || bindNames.Contains("StateCD")) sqlParameters.AddWithValue("@StateCD", obj.StateCD);
+            if (bindNames == null || bindNames.Contains("StateCode")) sqlParameters.AddWithValue("@StateCode", obj.StateCode);
             if (bindNames == null || bindNames.Contains("ZipCode")) sqlParameters.AddWithValue("@ZipCode", obj.ZipCode);
             if (bindNames == null || bindNames.Contains("Created")) sqlParameters.AddWithValue("@Created", obj.Created);
             if (bindNames == null || bindNames.Contains("CreatedBy")) sqlParameters.AddWithValue("@CreatedBy", obj.CreatedBy);
             if (bindNames == null || bindNames.Contains("Modified")) sqlParameters.AddWithValue("@Modified", obj.Modified);
             if (bindNames == null || bindNames.Contains("ModifiedBy")) sqlParameters.AddWithValue("@ModifiedBy", obj.ModifiedBy);
+            if (bindNames == null || bindNames.Contains("IsDeleted")) sqlParameters.AddWithValue("@IsDeleted", obj.IsDeleted);
+            if (bindNames == null || bindNames.Contains("Deleted")) sqlParameters.AddWithValue("@Deleted", obj.Deleted);
+            if (bindNames == null || bindNames.Contains("DeletedBy")) sqlParameters.AddWithValue("@DeletedBy", obj.DeletedBy);
 
         }
 

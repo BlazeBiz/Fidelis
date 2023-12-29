@@ -1,6 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[CustomerAdd]
 	@customerJSON nvarchar(max)
 AS
+    -- TODO
     Declare @userId INT = 1   -- Stub
 Begin
 
@@ -47,11 +48,58 @@ Begin
     SELECT @CustomerId = @@IDENTITY;
 
     /**********************************************************************************************
-    ***                               Projects                                                ***
+    ***                            CustomerAddress                                              ***
     **********************************************************************************************/
-    --BEGIN -- Begin Update Projects region
+    BEGIN -- Begin Update CustomerAddress region
 
-    --END -- End Update Projects region
+        Declare @customerAddress table (
+            CustomerAddressId INT,
+            CustomerId INT NOT NULL,
+            ShipToFlag BIT NOT NULL,
+            BillToFlag BIT NOT NULL,
+            ShipToName varchar(40) NULL,
+            AddressLine1 varchar(40) NULL,
+            AddressLine2 varchar(40) NULL,
+            AddressLine3 varchar(40) NULL,
+            City varchar(40) NULL,
+            StateCode char(2) NULL,
+            ZipCode varchar(10) NULL,
+            IsDeleted BIT NOT NULL DEFAULT 0
+        );
+
+        Insert @customerAddress 
+            SELECT *   
+                FROM OPENJSON(@customerJSON, N'$.CustomerAddresses')  
+                WITH ( 
+                    CustomerAddressId INT, 
+                    CustomerId int,
+                    ShipToFlag BIT,
+                    BillToFlag BIT,
+                    ShipToName varchar(40),
+                    AddressLine1 varchar(40),
+                    AddressLine2 varchar(40),
+                    AddressLine3 varchar(40),
+                    City varchar(40),
+                    StateCode char(2),
+                    ZipCode varchar(10),
+                    IsDeleted BIT
+                )  
+
+        /*** INSERT ***/
+        -- There's no reference to new IDs in the Customer row, so we can simply add addresses to the table
+        INSERT CustomerAddress 
+            (CustomerId, ShipToFlag, BillToFlag, ShipToName, 
+             AddressLine1, AddressLine2, AddressLine3, 
+             City, StateCode, ZipCode, Created, CreatedBy, Modified, ModifiedBy)
+
+             SELECT @CustomerId, ShipToFlag, BillToFlag, ShipToName, 
+                AddressLine1, AddressLine2, AddressLine3, 
+                City, StateCode, ZipCode, @now, @userId, @now, @userId
+             FROM @customerAddress
+             WHERE ISNULL(CustomerAddressId, 0) = 0
+        
+    END -- End Update CustomerAddress region
+
 
     Commit Transaction
 

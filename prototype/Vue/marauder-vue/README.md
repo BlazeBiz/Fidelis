@@ -8,6 +8,7 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 
 ## TODO
 
+1. Add logic to CustomerUpdate and CustomerInsert to add addresses.
 1. Add IsDeleted, Deleted, and DeletedBy to Address table and queries for customer
 1. Add Delete methods (address)
 1. Font awesome (add, edit, delete, view)

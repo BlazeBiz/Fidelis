@@ -9,11 +9,14 @@
     AddressLine2 varchar(40) NULL,
     AddressLine3 varchar(40) NULL,
     City varchar(40) NULL,
-    StateCD char(2) NULL,
+    StateCode char(2) NULL,
     ZipCode varchar(10) NULL, 
     [Created] DATETIME NOT NULL DEFAULT getutcdate(), 
     [CreatedBy] INT NOT NULL, 
     [Modified] DATETIME NOT NULL DEFAULT getutcdate(), 
-    [ModifiedBy] INT NOT NULL, 
+    [ModifiedBy] INT NOT NULL,
+    [IsDeleted] BIT NOT NULL DEFAULT 0,
+    [Deleted] DATETIME NULL,
+    [DeletedBy] INT NULL, 
     CONSTRAINT [FK_CustomerAddress_Customer] FOREIGN KEY (CustomerId) REFERENCES Customer(CustomerId)
 )

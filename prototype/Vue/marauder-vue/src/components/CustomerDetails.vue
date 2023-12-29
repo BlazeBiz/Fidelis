@@ -49,7 +49,7 @@
         <template v-for="add in customer.customerAddresses">
           <div class="col" v-html="addressHTML(add)"></div>
           <div class="col">{{ add.city }}</div>
-          <div class="col">{{ add.stateCD }}</div>
+          <div class="col">{{ add.stateCode }}</div>
           <div class="col">{{ add.zipCode }}</div>
           <div class="col">
             <input type="checkbox" disabled v-model="add.shipToFlag" /> Shipping <br />

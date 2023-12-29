@@ -29,7 +29,7 @@ Declare @addressTable TABLE
     AddressLine2 varchar(40) NULL,
     AddressLine3 varchar(40) NULL,
     City varchar(40) NULL,
-    StateCD char(2) NULL,
+    StateCode char(2) NULL,
     ZipCode varchar(10) NULL
 )
 
@@ -112,15 +112,15 @@ WHEN MATCHED Then
 	AddressLine2 = Source.AddressLine2,
 	AddressLine3 = Source.AddressLine3,
 	City = Source.City,
-	StateCD = Source.StateCD,
+	StateCode = Source.StateCode,
 	ZipCode = Source.ZipCode,
 	Modified    = getutcdate()
 
 
 WHEN NOT MATCHED BY TARGET THEN
- INSERT(CustomerAddressId, CustomerId, ShipToFlag, BillToFlag, ShipToName, AddressLine1, AddressLine2, AddressLine3, City, StateCD, ZipCode, Created, CreatedBy, Modified, ModifiedBy)
+ INSERT(CustomerAddressId, CustomerId, ShipToFlag, BillToFlag, ShipToName, AddressLine1, AddressLine2, AddressLine3, City, StateCode, ZipCode, Created, CreatedBy, Modified, ModifiedBy)
  VALUES(Source.CustomerAddressId, Source.CustomerId, Source.ShipToFlag, Source.BillToFlag, Source.ShipToName, 
-	Source.AddressLine1, Source.AddressLine2, Source.AddressLine3, Source.City, Source.StateCD, Source.ZipCode, getutcdate(), 1, getutcdate(), 1)
+	Source.AddressLine1, Source.AddressLine2, Source.AddressLine3, Source.City, Source.StateCode, Source.ZipCode, getutcdate(), 1, getutcdate(), 1)
 WHEN NOT MATCHED BY SOURCE AND Target.CustomerAddressId <= 1000 THEN 
  DELETE
 ;

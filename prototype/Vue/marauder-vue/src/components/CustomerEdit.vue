@@ -72,7 +72,7 @@
               <input type="text" v-model="add.city" />
             </div>
             <div class="col">
-              <input type="text" v-model="add.stateCD" />
+              <input type="text" v-model="add.stateCode" />
             </div>
             <div class="col">
               <input type="text" v-model="add.zipCode" />
@@ -142,12 +142,13 @@ export default {
       if (!this.customer) return;
       if (!this.customer.customerAddresses) this.customer.customerAddresses = [];
       let newAddress = {
+        customerAddressId: 0,
         customerId: this.customer.customerId,
         addressLine1: '',
         addressLine2: null,
         addressLine3: null,
         city: null,
-        stateCD: '',
+        stateCode: '',
         zipCode: '',
         billToFlag: true,
         shipToFlag: true,

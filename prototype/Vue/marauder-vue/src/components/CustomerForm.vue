@@ -1,18 +1,30 @@
 <template>
-  <div id="customer-details">
-    <h1>Customer
+  <template v-if="error">
+    <h1>Error</h1>
+    <!-- <div v-if="error?.err?.response?.status === 404">
+      <p>No customer with ID {{ customerId }} was found in the database.</p>
+    </div>
+    <div v-else> -->
+    <p>{{ error.msg }}</p>
+    <!-- </div> -->
+  </template>
+  <div v-else id="customer-details">
+    <h1>
       <em>
         <span v-if="isLoading" id="skeleton-customer-name" class="skeleton skeleton-text"></span>
-        <span v-else id="hdg-customer-name">{{ customer.customerName }}</span>
+        <span v-else>{{ (mode === 'new') ? 'New customer' : customer.customerName }}</span>
       </em>
     </h1>
     <section id="main-grid">
       <div class="gridtable standard-form gridlines" id="customer-form">
-        <div class="col">Customer id:</div>
-        <div class="col" v-if="isLoading">
-          <div class="skeleton skeleton-text"></div>
-        </div>
-        <div class="col" v-else>{{ customer.customerId }}</div>
+        <!-- Show the id if it's an existing customer -->
+        <template v-if="mode === 'edit'">
+          <div class="col">Customer id:</div>
+          <div class="col" v-if="isLoading">
+            <div class="skeleton skeleton-text"></div>
+          </div>
+          <div class="col" v-else>{{ customer.customerId }}</div>
+        </template>
         <div class="col">Customer name:</div>
         <div class="col" v-if="isLoading">
           <div class="skeleton skeleton-text"></div>
@@ -27,20 +39,44 @@
         <div class="col" v-else>
           <input type="text" name="customer-nbr" id="customer-nbr" v-model="customer.customerNbr">
         </div>
-        <div class="col">Created on:</div>
+
+
+        <div class="col">Payment terms:</div>
         <div class="col" v-if="isLoading">
           <div class="skeleton skeleton-text"></div>
         </div>
-        <div class="col" v-else>{{ formatDateTime(customer.created) }} by {{ customer.createdBy }}</div>
-        <div class="col">Modified on:</div>
+        <div class="col" v-else>
+          <input type="text" name="customer-nbr" id="customer-nbr" v-model="customer.paymentTerms">
+        </div>
+        <div class="col">G/L Link:</div>
         <div class="col" v-if="isLoading">
           <div class="skeleton skeleton-text"></div>
         </div>
-        <div class="col" v-else>{{ formatDateTime(customer.modified) }} by {{ customer.modifiedBy }}</div>
+        <div class="col" v-else>
+          <input type="text" name="customer-nbr" id="customer-nbr" v-model="customer.glLink">
+        </div>
+
+
+
+
+
+        <!-- Show created and modified information if it's an existing customer -->
+        <template v-if="mode === 'edit'">
+          <div class="col">Created on:</div>
+          <div class="col" v-if="isLoading">
+            <div class="skeleton skeleton-text"></div>
+          </div>
+          <div class="col" v-else>{{ formatDateTime(customer.created) }} by {{ customer.createdBy }}</div>
+          <div class="col">Modified on:</div>
+          <div class="col" v-if="isLoading">
+            <div class="skeleton skeleton-text"></div>
+          </div>
+          <div class="col" v-else>{{ formatDateTime(customer.modified) }} by {{ customer.modifiedBy }}</div>
+        </template>
       </div>
     </section>
     <section id="address-grid">
-      <h3>Addresses</h3>
+      <h2>Addresses</h2>
       <a id="new-address-link" href="#" @click.prevent="newAddress">New address</a>
       <div class="gridtable gridtable-6" id="address-table">
         <div class="col hdg">
@@ -88,7 +124,7 @@
     </section>
     <div>
       <input type="button" value="Save" @click="save()">
-      <input type="button" value="Cancel" @click="refreshPage()">
+      <input type="button" value="Cancel" @click="reset()">
     </div>
   </div>
 </template>
@@ -108,26 +144,58 @@ export default {
   },
   data() {
     return {
-      customer: {},
+      customer: this.newCustomer(),
       isLoading: false,
+      mode: 'new',
+      error: null,
     };
   },
   methods: {
-    refreshPage() {
+    newCustomer() {
+      return {
+        customerAddresses: [],
+      };
+    },
+    fetchCustomer() {
       this.isLoading = true;
       this.customer = {};
       apiService.getCustomerById(this.customerId).then(resp => {
         this.isLoading = false;
         this.customer = resp.data;
-      });
-
+      })
+        .catch(error => {
+          this.isLoading = false;
+          this.error = error;
+        });
     },
     save() {
-      this.isLoading = true;
-      apiService.updateCustomer(this.customer).then(resp => {
-        this.isLoading = false;
-        this.customer = resp.data;
-      })
+      if (this.mode === 'new') {
+        // Insert the customer
+        this.isLoading = true;
+        apiService.insertCustomer(this.customer).then(resp => {
+          this.isLoading = false;
+          this.customer = resp.data;
+          this.mode = 'edit';
+        })
+      } else {
+        // edit
+        this.isLoading = true;
+        apiService.updateCustomer(this.customer).then(resp => {
+          this.isLoading = false;
+          this.customer = resp.data;
+        })
+          .catch(error => {
+            this.isLoading = false;
+            this.error = error;
+          });
+      }
+    },
+    reset() {
+      if (this.mode === 'new') {
+        this.customer = this.newCustomer();
+      } else {
+        this.fetchCustomer();
+      }
     },
     formatDateTime(date) {
       return utility.formatDateTime(date);
@@ -171,7 +239,10 @@ export default {
     }
   },
   created() {
-    this.refreshPage();
+    if (this.customerId > 0) {
+      this.mode = 'edit';
+      this.fetchCustomer();
+    }
   },
 
 };
@@ -214,7 +285,8 @@ a {
   width: 300px;
 }
 
-#hdg-customer-name {
+h1 {
+  font-style: italic;
   color: var(--heading-fg-2);
 }
 

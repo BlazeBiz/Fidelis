@@ -1,10 +1,10 @@
-@<template>
+<template>
     <div>
-        <h1>Sales Order Search</h1>
+        <h1>Search Sales Orders</h1>
     </div>
 </template>
 
-<script setup lang="ts">
+<script>
 
 </script>
 

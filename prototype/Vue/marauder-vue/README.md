@@ -7,8 +7,15 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 - [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 
 ## TODO
-
-1. Add logic to CustomerUpdate and CustomerInsert to add addresses.
-1. Add IsDeleted, Deleted, and DeletedBy to Address table and queries for customer
-1. Add Delete methods (address)
-1. Font awesome (add, edit, delete, view)
+- [x] Combine Add and Update into CustomerForm, and include in both views
+- [x] Add IsDeleted, Deleted, and DeletedBy to Address table and queries for customer
+- [x] Add Delete method (address)
+- [ ] Font awesome (add, edit, delete, view)
+- [ ] Sales Order
+    - [ ] Customer lookup
+    - [ ] New SalesOrder
+    - [ ] Edit SalesOrder
+- [ ] Navigation menu
+    - [ ] "Folders" (collapsible) and links
+    - [ ] Data-driven
+- [ ] Remove New Customer from Search, and add it to the navigation menu

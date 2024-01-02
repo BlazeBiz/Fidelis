@@ -17,6 +17,13 @@ export default {
         return this.httpGetPromise(`${this.baseUrl}/customers/${customerId}`);
     },
     /************************************************************
+     * insertCustomer
+     ***********************************************************/
+    insertCustomer(customer) {
+        return this.httpPostPromise(`${this.baseUrl}/customers`, customer);
+    },
+
+    /************************************************************
      * updateCustomer
      ***********************************************************/
     updateCustomer(customer) {

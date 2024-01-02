@@ -1,6 +1,6 @@
 <template>
     <div id="customer-view">
-      <customer-form :customer-id="customerId"/>
+      <customer-form :customer-id="0"/>
     </div>
   </template>
   
@@ -10,14 +10,10 @@
     components: {
       CustomerForm,
     },
-    name: "CustomerEditView",
+    name: "CustomerNewView",
     data() {
       return {
-        customerId: null,
       };
-    },
-    created() {
-        this.customerId = parseInt(this.$route.params.id);
     },
   };
   </script>

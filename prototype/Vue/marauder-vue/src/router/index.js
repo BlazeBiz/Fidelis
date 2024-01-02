@@ -5,6 +5,7 @@ import SalesOrderSearchView from '@/views/salesOrderSearchView.vue';
 import AboutView from '@/views/AboutView.vue';
 import CustomerDetailsView from '@/views/CustomerDetailsView.vue';
 import CustomerEditView from '@/views/CustomerEditView.vue';
+import CustomerNewView from '@/views/CustomerNewView.vue';
 
 const routes = [
     { path: '/', name: 'Home', component: HomeView },
@@ -13,6 +14,7 @@ const routes = [
     { path: '/about', name: 'About', component: AboutView },
     { path: '/customer/:id', name: 'CustomerDetails', component: CustomerDetailsView },
     { path: '/customer/:id/edit', name: 'CustomerEdit', component: CustomerEditView },
+    { path: '/customer/new', name: 'CustomerNew', component: CustomerNewView },
 ];
 const router = createRouter(
     {

@@ -1,6 +1,8 @@
 <template>
     <div>
         <h1>Search Customers</h1>
+        <router-link :to="{ name: 'CustomerNew' }">New customer</router-link>
+
         <div id="searchForm">
             <fieldset>
                 <label for="searchValue">Find customers where field </label>

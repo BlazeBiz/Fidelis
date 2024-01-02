@@ -6,7 +6,7 @@ Declare @table TABLE
 (
 	[CustomerId] INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
     [CustomerName] VARCHAR(50) NOT NULL, 
-    [CustomerNbr] VARCHAR(20) NULL, 
+    [CustomerNumber] VARCHAR(20) NULL, 
     [PaymentTerms] VARCHAR(20) NULL, 
     [GLLink] VARCHAR(20) NULL
 )
@@ -68,14 +68,14 @@ ON (Target.CustomerId = Source.CustomerId)
 WHEN MATCHED Then
  UPDATE SET
 	CustomerName = Source.CustomerName,
-	CustomerNbr  = Source.CustomerNbr,
+	CustomerNumber  = Source.CustomerNumber,
 	PaymentTerms = Source.PaymentTerms,
 	GLLink       = Source.GLLink,
 	Modified     = getutcdate()
 
 WHEN NOT MATCHED BY TARGET THEN
- INSERT(CustomerId, CustomerName, CustomerNbr, PaymentTerms, GLLink, Created, CreatedBy, Modified, ModifiedBy)
- VALUES(Source.CustomerId, Source.CustomerName, Source.CustomerNbr, Source.PaymentTerms, Source.GLLink, getutcdate(), 1, getutcdate(), 1)
+ INSERT(CustomerId, CustomerName, CustomerNumber, PaymentTerms, GLLink, Created, CreatedBy, Modified, ModifiedBy)
+ VALUES(Source.CustomerId, Source.CustomerName, Source.CustomerNumber, Source.PaymentTerms, Source.GLLink, getutcdate(), 1, getutcdate(), 1)
 WHEN NOT MATCHED BY SOURCE AND Target.CustomerId <= 1000 THEN 
  DELETE
 ;

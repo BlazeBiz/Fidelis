@@ -59,7 +59,7 @@ export default {
     <!-- NAV: Left-side links -->
     <!-- 
         Customers - CustomerSearch component
-          Search by name, Search by CustomerNbr, List customers
+          Search by name, Search by CustomerNumber, List customers
             View Customer Details
               View Sales Orders
               New Sales Order

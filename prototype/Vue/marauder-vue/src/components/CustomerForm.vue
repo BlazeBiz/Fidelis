@@ -37,7 +37,7 @@
           <div class="skeleton skeleton-text"></div>
         </div>
         <div class="col" v-else>
-          <input type="text" name="customer-nbr" id="customer-nbr" v-model="customer.customerNbr">
+          <input type="text" name="customer-nbr" id="customer-nbr" v-model="customer.customerNumber">
         </div>
 
 

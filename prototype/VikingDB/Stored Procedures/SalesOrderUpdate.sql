@@ -9,11 +9,11 @@ Begin
     **********************************************************************************************/
     BEGIN -- Begin Declare variables and Parse JSON region
         declare @SalesOrderId int = Convert(int, JSON_VALUE(@salesOrderJSON, '$.SalesOrderId'));
-        declare @SalesOrderNbr nvarchar(30) = TRIM(JSON_VALUE(@salesOrderJSON, '$.SalesOrderNbr'));
+        declare @SalesOrderNumber nvarchar(30) = TRIM(JSON_VALUE(@salesOrderJSON, '$.SalesOrderNumber'));
         --declare @CustomerId int = CONVERT(int, JSON_VALUE(@salesOrderJSON, '$.CustomerId'));
-        declare @CustomerPurchaseOrderNbr nvarchar(30) = TRIM(JSON_VALUE(@salesOrderJSON, '$.CustomerPurchaseOrderNbr'));
-        declare @SalesOrderStatusCd int =  1; -- (Open)  CONVERT(int, JSON_VALUE(@salesOrderJSON, '$.SalesOrderStatusCd'));
-        declare @PaymentTermsCd int = CONVERT(int, JSON_VALUE(@salesOrderJSON, '$.PaymentTermsCd'));
+        declare @CustomerPONumber nvarchar(30) = TRIM(JSON_VALUE(@salesOrderJSON, '$.CustomerPONumber'));
+        declare @SalesOrderStatusCode int =  1; -- (Open)  CONVERT(int, JSON_VALUE(@salesOrderJSON, '$.SalesOrderStatusCode'));
+        declare @PaymentTermsCode int = CONVERT(int, JSON_VALUE(@salesOrderJSON, '$.PaymentTermsCode'));
         declare @ShipToAddressId int = CONVERT(int, JSON_VALUE(@salesOrderJSON, '$.ShipToAddressId'));
         declare @BillToAddressId int = CONVERT(int, JSON_VALUE(@salesOrderJSON, '$.BillToAddressId'));
 
@@ -27,12 +27,12 @@ Begin
     **********************************************************************************************/
     BEGIN -- Update SalesOrder region
         Update SalesOrder Set
-            SalesOrderNbr = @SalesOrderNbr, 
+            SalesOrderNumber = @SalesOrderNumber, 
             -- can't change CustomerId
-            CustomerPurchaseOrderNbr = @CustomerPurchaseOrderNbr, 
+            CustomerPONumber = @CustomerPONumber, 
             -- can't change OrderDate, 
-            SalesOrderStatusCd = @SalesOrderStatusCd, 
-            PaymentTermsCd = @PaymentTermsCd, 
+            SalesOrderStatusCode = @SalesOrderStatusCode, 
+            PaymentTermsCode = @PaymentTermsCode, 
             ShipToAddressId = @ShipToAddressId, 
             BillToAddressId = @BillToAddressId, 
             Modified = @now, 

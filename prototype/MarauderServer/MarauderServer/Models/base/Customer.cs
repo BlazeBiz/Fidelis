@@ -6,7 +6,7 @@ namespace MarauderServer.Models
     {
         public int CustomerId { get; set; }
         public string CustomerName { get; set; } = "";
-        public string? CustomerNbr { get; set; }
+        public string? CustomerNumber { get; set; }
         public string? PaymentTerms { get; set; }
         public string? GLLink { get; set; }
         public DateTime Created { get; set; }

@@ -27,7 +27,7 @@
         <div class="col" v-if="isLoading">
           <div class="skeleton skeleton-text"></div>
         </div>
-        <div class="col" v-else>{{ customer.customerNbr }}</div>
+        <div class="col" v-else>{{ customer.customerNumber }}</div>
         <div class="col">Payment terms:</div>
         <div class="col" v-if="isLoading">
           <div class="skeleton skeleton-text"></div>

@@ -11,7 +11,7 @@ Begin
     BEGIN -- Begin Declare variables and Parse JSON region
         declare @CustomerId int = Convert(int, JSON_VALUE(@customerJSON, '$.CustomerId'));
         declare @CustomerName nvarchar(50) = TRIM(JSON_VALUE(@customerJSON, '$.CustomerName'));
-        declare @CustomerNbr nvarchar(20) = TRIM(JSON_VALUE(@customerJSON, '$.CustomerNbr'));
+        declare @CustomerNumber nvarchar(20) = TRIM(JSON_VALUE(@customerJSON, '$.CustomerNumber'));
         declare @PaymentTerms nvarchar(20) = TRIM(JSON_VALUE(@customerJSON, '$.PaymentTerms'));
         declare @GLLink nvarchar(20) = TRIM(JSON_VALUE(@customerJSON, '$.GLLink'));
 
@@ -26,7 +26,7 @@ Begin
     BEGIN -- Update Customer region
         Update Customer Set
             CustomerName = @CustomerName,
-            CustomerNbr = @CustomerNbr,
+            CustomerNumber = @CustomerNumber,
             PaymentTerms = @PaymentTerms,
             GLLink = @GLLink,
             Modified = @now,

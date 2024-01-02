@@ -3,5 +3,5 @@
 AS
 	SELECT * 
 	FROM Customer
-	WHERE CustomerNbr LIKE @searchValue
+	WHERE CustomerNumber LIKE @searchValue
 RETURN 0

@@ -11,7 +11,7 @@ Begin
     BEGIN -- Begin Declare variables and Parse JSON region
         declare @CustomerId int;
         declare @CustomerName nvarchar(50) = TRIM(JSON_VALUE(@customerJSON, '$.CustomerName'));
-        declare @CustomerNbr nvarchar(20) = TRIM(JSON_VALUE(@customerJSON, '$.CustomerNbr'));
+        declare @CustomerNumber nvarchar(20) = TRIM(JSON_VALUE(@customerJSON, '$.CustomerNumber'));
         declare @PaymentTerms nvarchar(20) = TRIM(JSON_VALUE(@customerJSON, '$.PaymentTerms'));
         declare @GLLink nvarchar(20) = TRIM(JSON_VALUE(@customerJSON, '$.GLLink'));
 
@@ -26,7 +26,7 @@ Begin
     BEGIN -- Insert Customer region
         INSERT INTO Customer (            
             CustomerName,
-            CustomerNbr,
+            CustomerNumber,
             PaymentTerms,
             GLLink,
             Created,
@@ -35,7 +35,7 @@ Begin
             ModifiedBy
         ) VALUES (
             @CustomerName,
-            @CustomerNbr,
+            @CustomerNumber,
             @PaymentTerms,
             @GLLink,
             @now,

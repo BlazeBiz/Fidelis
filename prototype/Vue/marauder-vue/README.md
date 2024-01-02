@@ -12,6 +12,7 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 - [x] Add Delete method (address)
 - [ ] Font awesome (add, edit, delete, view)
 - [ ] Sales Order
+    - [ ] SalesOrder search
     - [ ] Customer lookup
     - [ ] New SalesOrder
     - [ ] Edit SalesOrder

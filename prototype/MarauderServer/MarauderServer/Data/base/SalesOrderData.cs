@@ -13,12 +13,12 @@ namespace MarauderServer.Data
         internal override void RowToObject(SqlDataReader row, SalesOrder obj)
         {
             obj.SalesOrderId = Int32PropertyFromRow(row, "SalesOrderId");
-            obj.SalesOrderNbr = StringNullablePropertyFromRow(row, "SalesOrderNbr");
+            obj.SalesOrderNumber = StringNullablePropertyFromRow(row, "SalesOrderNumber");
             obj.CustomerId = Int32PropertyFromRow(row, "CustomerId");
-            obj.CustomerPurchaseOrderNbr = StringNullablePropertyFromRow(row, "CustomerPurchaseOrderNbr");
+            obj.CustomerPONumber = StringNullablePropertyFromRow(row, "CustomerPONumber");
             obj.OrderDate = DateTimePropertyFromRow(row, "OrderDate");
-            obj.SalesOrderStatusCd = Int32PropertyFromRow(row, "SalesOrderStatusCd");
-            obj.PaymentTermsCd = Int32NullablePropertyFromRow(row, "PaymentTermsCd");
+            obj.SalesOrderStatusCode = Int32PropertyFromRow(row, "SalesOrderStatusCode");
+            obj.PaymentTermsCode = Int32NullablePropertyFromRow(row, "PaymentTermsCode");
             obj.ShipToAddressId = Int32NullablePropertyFromRow(row, "ShipToAddressId");
             obj.BillToAddressId = Int32NullablePropertyFromRow(row, "BillToAddressId");
             obj.Created = DateTimePropertyFromRow(row, "Created");
@@ -33,12 +33,12 @@ namespace MarauderServer.Data
             List<string>? bindNames = null;
             if (parametersToBind != null) bindNames = new List<string>(parametersToBind);
             if (bindNames == null || bindNames.Contains("SalesOrderId")) sqlParameters.AddWithValue("@SalesOrderId", obj.SalesOrderId);
-            if (bindNames == null || bindNames.Contains("SalesOrderNbr")) sqlParameters.AddWithValue("@SalesOrderNbr", obj.SalesOrderNbr);
+            if (bindNames == null || bindNames.Contains("SalesOrderNumber")) sqlParameters.AddWithValue("@SalesOrderNumber", obj.SalesOrderNumber);
             if (bindNames == null || bindNames.Contains("CustomerId")) sqlParameters.AddWithValue("@CustomerId", obj.CustomerId);
-            if (bindNames == null || bindNames.Contains("CustomerPurchaseOrderNbr")) sqlParameters.AddWithValue("@CustomerPurchaseOrderNbr", obj.CustomerPurchaseOrderNbr);
+            if (bindNames == null || bindNames.Contains("CustomerPONumber")) sqlParameters.AddWithValue("@CustomerPONumber", obj.CustomerPONumber);
             if (bindNames == null || bindNames.Contains("OrderDate")) sqlParameters.AddWithValue("@OrderDate", obj.OrderDate);
-            if (bindNames == null || bindNames.Contains("SalesOrderStatusCd")) sqlParameters.AddWithValue("@SalesOrderStatusCd", obj.SalesOrderStatusCd);
-            if (bindNames == null || bindNames.Contains("PaymentTermsCd")) sqlParameters.AddWithValue("@PaymentTermsCd", obj.PaymentTermsCd);
+            if (bindNames == null || bindNames.Contains("SalesOrderStatusCode")) sqlParameters.AddWithValue("@SalesOrderStatusCode", obj.SalesOrderStatusCode);
+            if (bindNames == null || bindNames.Contains("PaymentTermsCode")) sqlParameters.AddWithValue("@PaymentTermsCode", obj.PaymentTermsCode);
             if (bindNames == null || bindNames.Contains("ShipToAddressId")) sqlParameters.AddWithValue("@ShipToAddressId", obj.ShipToAddressId);
             if (bindNames == null || bindNames.Contains("BillToAddressId")) sqlParameters.AddWithValue("@BillToAddressId", obj.BillToAddressId);
             if (bindNames == null || bindNames.Contains("Created")) sqlParameters.AddWithValue("@Created", obj.Created);

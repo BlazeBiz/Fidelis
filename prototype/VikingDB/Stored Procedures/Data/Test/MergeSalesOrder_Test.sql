@@ -5,12 +5,12 @@ SET NOCOUNT ON
 Declare @table TABLE
 (
 	[SalesOrderId] INT NOT NULL PRIMARY KEY IDENTITY(1, 1), 
-    [SalesOrderNbr] VARCHAR(30) NULL, 
+    [SalesOrderNumber] VARCHAR(30) NULL, 
     [CustomerId] INT NOT NULL, 
-    [CustomerPurchaseOrderNbr] VARCHAR(30) NULL, 
+    [CustomerPONumber] VARCHAR(30) NULL, 
     [OrderDate] DATE NOT NULL DEFAULT getdate(), 
-    [SalesOrderStatusCd] INT NOT NULL DEFAULT 1, -- 1 open, 2 complete, 3 cancelled
-    [PaymentTermsCd] INT NULL, 
+    [SalesOrderStatusCode] INT NOT NULL DEFAULT 1, -- 1 open, 2 complete, 3 cancelled
+    [PaymentTermsCode] INT NULL, 
     [ShipToAddressId] INT NULL, 
     [BillToAddressId] INT NULL
 )
@@ -40,19 +40,19 @@ USING
 ON (Target.SalesOrderId = Source.SalesOrderId)
 WHEN MATCHED Then
  UPDATE SET
-	SalesOrderNbr = Source.SalesOrderNbr,
+	SalesOrderNumber = Source.SalesOrderNumber,
 	CustomerId    = Source.CustomerId,
-	CustomerPurchaseOrderNbr = Source.CustomerPurchaseOrderNbr,
+	CustomerPONumber = Source.CustomerPONumber,
 	OrderDate     = Source.OrderDate,
-	SalesOrderStatusCd = Source.SalesOrderStatusCd,
-	PaymentTermsCd = Source.PaymentTermsCd,
+	SalesOrderStatusCode = Source.SalesOrderStatusCode,
+	PaymentTermsCode = Source.PaymentTermsCode,
 	ShipToAddressId = Source.ShipToAddressId,
 	BillToAddressId = Source.BillToAddressId,
 	Modified     = getutcdate()
 
 WHEN NOT MATCHED BY TARGET THEN
- INSERT(SalesOrderId, SalesOrderNbr, CustomerId, CustomerPurchaseOrderNbr, OrderDate, SalesOrderStatusCd, PaymentTermsCd, ShipToAddressId, BillToAddressId, Created, CreatedBy, Modified, ModifiedBy)
- VALUES(Source.SalesOrderId, Source.SalesOrderNbr, Source.CustomerId, Source.CustomerPurchaseOrderNbr, Source.OrderDate, Source.SalesOrderStatusCd, Source.PaymentTermsCd, Source.ShipToAddressId, Source.BillToAddressId, getutcdate(), 1, getutcdate(), 1)
+ INSERT(SalesOrderId, SalesOrderNumber, CustomerId, CustomerPONumber, OrderDate, SalesOrderStatusCode, PaymentTermsCode, ShipToAddressId, BillToAddressId, Created, CreatedBy, Modified, ModifiedBy)
+ VALUES(Source.SalesOrderId, Source.SalesOrderNumber, Source.CustomerId, Source.CustomerPONumber, Source.OrderDate, Source.SalesOrderStatusCode, Source.PaymentTermsCode, Source.ShipToAddressId, Source.BillToAddressId, getutcdate(), 1, getutcdate(), 1)
 WHEN NOT MATCHED BY SOURCE AND Target.SalesOrderId <= 1000 THEN 
  DELETE
 ;

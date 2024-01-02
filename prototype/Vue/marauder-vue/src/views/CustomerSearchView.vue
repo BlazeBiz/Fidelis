@@ -58,7 +58,7 @@
                                 {{ c.customerName }}
                             </router-link>
                         </div>
-                        <div class="col">{{ c.customerNbr }}</div>
+                        <div class="col">{{ c.customerNumber }}</div>
                         <div class="col">{{ c.paymentTerms }}</div>
                         <div class="col">{{c.GLLink}}</div>
                         <div class="col">

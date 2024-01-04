@@ -7,8 +7,8 @@
             <fieldset>
                 <label for="searchValue">Find customers where field </label>
                 <select name="searchField" id="searchField" v-model="searchField">
-                    <option value="name" selected>Customer Name</option>
-                    <option value="nbr">Customer Number</option>
+                    <option value="customerName" selected>Customer name</option>
+                    <option value="customerNumber">Customer number</option>
                 </select>&nbsp;
                 <select name="searchType" id="searchType" v-model="searchType">
                     <option value="contains">Contains</option>
@@ -48,7 +48,7 @@
                         <div class="col skeleton skeleton-text"></div>
                         <div class="col skeleton skeleton-text"></div>
                         <div class="col skeleton skeleton-text"></div>
-                        <!-- <div class="col col-center skeleton skeleton-text"></div> -->
+                        <div class="col skeleton skeleton-text"></div>
                     </template>
                 </template>
                 <template v-else>
@@ -115,7 +115,7 @@ export default {
     created() {
         // Fill in search parameters from routexxx
         this.searchType = this.$route.query.searchType || 'contains';
-        this.searchField = this.$route.query.searchField || 'name';
+        this.searchField = this.$route.query.searchField || 'customerName';
         this.searchValue = this.$route.query.searchValue || '';
 
         if (this.searchValue) {

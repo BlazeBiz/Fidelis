@@ -25,9 +25,9 @@ namespace MarauderServer.Controllers
                 return BadRequest("Please specify a value for searchField, searchType, and searchValue");
             }
             searchField = searchField.Trim().ToLower();
-            if (searchField != "name" && searchField != "nbr")
+            if (searchField != "customername" && searchField != "customernumber")
             {
-                return BadRequest("searchField must be 'name' or 'nbr'");
+                return BadRequest("searchField must be 'customerName' or 'customerNumber'");
             }
 
             searchType = searchType.Trim().ToLower();

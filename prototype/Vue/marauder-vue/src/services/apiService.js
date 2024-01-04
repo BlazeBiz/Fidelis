@@ -4,7 +4,7 @@ export default {
     baseUrl: import.meta.env.VITE_MARAUDER_API,
 
     /************************************************************
-     * getCustomers
+     * Search Customers
      ***********************************************************/
     searchCustomers(searchField, searchType, searchValue) {
         return this.httpGetPromise(`${this.baseUrl}/customers?searchField=${searchField}&searchType=${searchType}&searchValue=${searchValue}`);
@@ -30,9 +30,12 @@ export default {
         return this.httpPutPromise(`${this.baseUrl}/customers/${customer.customerId}`, customer);
     },
 
-
-
-
+    /************************************************************
+     * Search SalesOrders
+     ***********************************************************/
+    searchSalesOrders(searchField, searchType, searchValue) {
+        return this.httpGetPromise(`${this.baseUrl}/salesOrders?searchField=${searchField}&searchType=${searchType}&searchValue=${searchValue}`);
+    },
 
 
     /************************************************************

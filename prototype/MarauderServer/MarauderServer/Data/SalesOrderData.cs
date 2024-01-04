@@ -56,6 +56,42 @@ namespace MarauderServer.Data
         }
 
         /// <summary>
+        /// Returns all sales order based on search criteria
+        /// </summary>
+        /// <returns>List of SalesOrder objects</returns>
+        public IEnumerable<SalesOrder> ListSalesOrders(string searchField, string searchType, string searchValue)
+        {
+            searchField = searchField.ToLower();
+            if (searchField != "customername" && searchField != "customernumber" && 
+                searchField != "customerponumber" && searchField != "salesordernumber")
+            {
+                throw new Exception($"ListCustomers: Invalid search field: '{searchField}'");
+            }
+
+            string proc = "SalesOrderSearch";
+            SqlCommand cmd = new SqlCommand(proc);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            if (searchType == "contains")
+            {
+                searchValue = "%" + searchValue + "%";
+            }
+            else if (searchType == "startswith")
+            {
+                searchValue = searchValue + "%";
+            }
+            else if (searchType != "equals")
+            {
+                throw new Exception($"ListCustomers: Invalid search type: '{searchType}'");
+            }
+
+            cmd.Parameters.AddWithValue("@searchField", searchField);
+            cmd.Parameters.AddWithValue("@searchValue", searchValue);
+            return GetList(cmd, "ListSalesOrders");
+        }
+
+
+        /// <summary>
         /// Returns all salesOrders for a salesOrder
         /// </summary>
         /// <returns>List of salesOrder objects for a salesOrder</returns>

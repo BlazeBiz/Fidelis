@@ -5,30 +5,35 @@ namespace MarauderServer.Services
 {
     public class SalesOrderService
     {
-        private SalesOrderData SalesOrderData;
+        private SalesOrderData salesOrderData;
 
         public SalesOrderService(SalesOrderData SalesOrderData)
         {
-            this.SalesOrderData = SalesOrderData;
+            this.salesOrderData = SalesOrderData;
         }
 
         public SalesOrder? GetSalesOrder(int SalesOrderId)
         {
-            return SalesOrderData.GetSalesOrder(SalesOrderId);
+            return salesOrderData.GetSalesOrder(SalesOrderId);
+        }
+
+        public IEnumerable<SalesOrder> ListSalesOrders(string searchField, string searchType, string searchValue)
+        {
+            return salesOrderData.ListSalesOrders(searchField, searchType, searchValue);
         }
 
         public IEnumerable<SalesOrder> ListSalesOrdersForCustomer(int customerId)
         {
-            return SalesOrderData.ListSalesOrdersForCustomer(customerId);
+            return salesOrderData.ListSalesOrdersForCustomer(customerId);
         }
         public SalesOrder? UpdateSalesOrder(SalesOrder SalesOrder)
         {
-            return SalesOrderData.UpdateSalesOrder(SalesOrder);
+            return salesOrderData.UpdateSalesOrder(SalesOrder);
         }
 
         public SalesOrder AddSalesOrder(SalesOrder SalesOrder)
         {
-            return SalesOrderData.InsertSalesOrder(SalesOrder);
+            return salesOrderData.InsertSalesOrder(SalesOrder);
         }
     }
 }

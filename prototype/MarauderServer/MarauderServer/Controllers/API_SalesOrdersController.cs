@@ -16,14 +16,38 @@ namespace MarauderServer.Controllers
             this.salesOrderService = salesOrderService;
         }
 
-        // GET: api/Customers
+        // GET: api/salesOrders
+        [HttpGet]
+        public ActionResult<IEnumerable<Customer>> Get([FromQuery] string searchField = "", [FromQuery] string searchType = "", [FromQuery] string searchValue = "")
+        {
+            if (String.IsNullOrEmpty(searchField) || String.IsNullOrEmpty(searchType) || String.IsNullOrEmpty(searchValue))
+            {
+                return BadRequest("Please specify a value for searchField, searchType, and searchValue");
+            }
+            searchField = searchField.Trim().ToLower();
+            if (searchField != "salesordernumber" && searchField != "customerponumber" &&
+                 searchField != "customername" && searchField != "customernumber")
+            {
+                return BadRequest("searchField must be 'salesOrderNumber' or 'customerPONumber' or 'customerName' or 'customerNumber'");
+            }
+
+            searchType = searchType.Trim().ToLower();
+            if (searchType != "contains" && searchType != "equals" && searchType != "startswith")
+            {
+                return BadRequest("searchType must be 'contains' or 'equals' or 'startsWith'");
+            }
+
+            return Ok(salesOrderService.ListSalesOrders(searchField, searchType, searchValue));
+        }
+
+        // GET: api/Customers/{n}/salesorders
         [HttpGet("/api/customers/{customerId}/salesorders")]
         public IEnumerable<SalesOrder> ListForCustomer(int customerId)
         {
             return salesOrderService.ListSalesOrdersForCustomer(customerId);
         }
 
-        // GET api/Customers/5
+        // GET api/SalesOrders/5
         [HttpGet("{id}")]
         public ActionResult<SalesOrder> Get(int id)
         {

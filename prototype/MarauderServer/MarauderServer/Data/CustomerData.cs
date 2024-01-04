@@ -49,10 +49,11 @@ namespace MarauderServer.Data
         public IEnumerable<Customer> ListCustomers(string searchField, string searchType, string searchValue)
         {
             string proc;
-            if (searchField == "name")
+            searchField = searchField.ToLower();
+            if (searchField == "customername")
             {
                 proc = "CustomerSearchByName";
-            } else if (searchField == "nbr")
+            } else if (searchField == "customernumber")
             {
                 proc = "CustomerSearchByNbr";
             }

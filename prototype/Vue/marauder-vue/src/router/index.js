@@ -15,6 +15,7 @@ const routes = [
     { path: '/customer/:id', name: 'CustomerDetails', component: CustomerDetailsView },
     { path: '/customer/:id/edit', name: 'CustomerEdit', component: CustomerEditView },
     { path: '/customer/new', name: 'CustomerNew', component: CustomerNewView },
+    { path: '/salesorder/new', name: 'SalesOrderNew', component: CustomerNewView },
 ];
 const router = createRouter(
     {

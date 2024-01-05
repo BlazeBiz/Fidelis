@@ -1,12 +1,124 @@
+<template>
+  <div id="app-component">
+    <!-- HEADER: Title Line across the top -->
+    <header id="header">
+      <div>{{ baseUrl }}</div>
+      <div>
+        <img src="./assets/IronMarauder.png" alt="">
+      </div>
+      <div>username</div>
+    </header>
+    <!-- NAV: Left-side links -->
+    <!-- 
+        Customers - CustomerSearch component
+          Search by name, Search by CustomerNumber, List customers
+            View Customer Details
+              View Sales Orders
+              New Sales Order
+            Edit Customer
+          New Customer
+
+        SalesOrders - SalesOrderSearch component
+          Search by Customer, Search by Part Number
+            View Sales Order Details
+              View Customer Details
+            Edit Sales Order
+          New Sales Order
+
+       -->
+    <nav id="nav">
+      <!-- TODO: Make this data driven with collapsible sections -->
+      <nav-item :item="navigation"></nav-item>
+    </nav>
+    <!-- MAIN: Body of the page..the router-view -->
+    <main id="main">
+      <div id="content">
+        <!-- <div id="error-message" :class="'message-' + $store.state.messageSeverity"
+                                v-if="$store.state.message && $store.state.messageSeverity">
+                                <span>{{ $store.state.message }}</span>
+                                <span><button type="button" @click="$store.dispatch('clearError')">
+                                    Clear
+                                  </button></span>
+                              </div> -->
+        <router-view />
+      </div>
+    </main>
+    <footer id="footer">
+      Copyright &copy; 2024 Blaze. All rights reserved.
+    </footer>
+  </div>
+</template>
+
 <script>
+import NavItem from '@/components/NavItem.vue';
 //import { mapGetters, mapState } from "vuex";
+let TYPES = {
+  ROUTE: 1,
+  COLLECTION: 2,
+};
+let STATES = {
+  EXPANDED: 1,
+  COLLAPSED: 2,
+};
 
 export default {
   components: {
+    NavItem,
   },
   data() {
     return {
-      baseUrl: import.meta.env.VITE_MARAUDER_API
+      baseUrl: import.meta.env.VITE_MARAUDER_API,
+      navigation: {
+        display: null,
+        // display: 'TOP',
+        type: TYPES.COLLECTION,
+        contents: [
+          {
+            display: 'Home',
+            type: TYPES.ROUTE,
+            route: 'Home',
+          },
+          {
+            display: 'Customers',
+            type: TYPES.COLLECTION,
+            state: STATES.EXPANDED,
+            contents: [
+            {
+                display: 'New customer',
+                type: TYPES.ROUTE,
+                route: 'CustomerNew',
+              },
+              {
+                display: 'Search customers',
+                type: TYPES.ROUTE,
+                route: 'CustomerSearch',
+              },
+            ]
+          },
+          {
+            display: 'Sales orders',
+            type: TYPES.COLLECTION,
+            state: STATES.EXPANDED,
+            contents: [
+            {
+                display: 'New sales order',
+                type: TYPES.ROUTE,
+                route: 'SalesOrderNew',
+              },
+              {
+                display: 'Search sales orders',
+                type: TYPES.ROUTE,
+                route: 'SalesOrderSearch',
+              },
+            ]
+          },
+          {
+            display: 'About',
+            type: TYPES.ROUTE,
+            route: 'About',
+          },
+        ]
+      },
     };
   },
   computed: {
@@ -41,72 +153,11 @@ export default {
   },
   created() {
     console.log(import.meta.env);
+    console.log(this.navigation);
   },
 };
 </script>
 
-
-<template>
-  <div id="app-component">
-  <!-- HEADER: Title Line across the top -->
-  <header id="header">
-      <div>{{ baseUrl }}</div>
-      <div>
-        <img src="./assets/IronMarauder.png" alt="">
-      </div>
-      <div>username</div>
-    </header>
-    <!-- NAV: Left-side links -->
-    <!-- 
-        Customers - CustomerSearch component
-          Search by name, Search by CustomerNumber, List customers
-            View Customer Details
-              View Sales Orders
-              New Sales Order
-            Edit Customer
-          New Customer
-
-        SalesOrders - SalesOrderSearch component
-          Search by Customer, Search by Part Number
-            View Sales Order Details
-              View Customer Details
-            Edit Sales Order
-          New Sales Order
-
-       -->
-    <nav id="nav">
-      <!-- TODO: Make this data driven with collapsible sections -->
-      <div>
-        <router-link :to="{ name: 'Home' }">Home</router-link>
-      </div>
-      <div>
-        <router-link :to="{ name: 'CustomerSearch' }">Customer</router-link>
-      </div>
-      <div>
-        <router-link :to="{ name: 'SalesOrderSearch' }">Sales orders</router-link>
-      </div>
-      <div>
-        <router-link :to="{ name: 'About' }">About</router-link>
-      </div>
-    </nav>
-    <!-- MAIN: Body of the page..the router-view -->
-    <main id="main">
-      <div id="content">
-        <!-- <div id="error-message" :class="'message-' + $store.state.messageSeverity"
-                                v-if="$store.state.message && $store.state.messageSeverity">
-                                <span>{{ $store.state.message }}</span>
-                                <span><button type="button" @click="$store.dispatch('clearError')">
-                                    Clear
-                                  </button></span>
-                              </div> -->
-        <router-view />
-      </div>
-    </main>
-    <footer id="footer">
-      Copyright &copy; 2024 Blaze. All rights reserved.
-    </footer>
-  </div>
-</template>
 
 <style src="./css/site.css" />
 

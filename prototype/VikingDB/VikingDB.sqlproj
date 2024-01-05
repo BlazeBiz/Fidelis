@@ -81,7 +81,6 @@
     <Build Include="Stored Procedures\SalesOrderUpdate.sql" />
     <Build Include="Stored Procedures\CustomerSearchByName.sql" />
     <Build Include="Stored Procedures\CustomerSearchByNbr.sql" />
-    <Build Include="Stored Procedures\SalesOrderSearchByCustomerName.sql" />
     <Build Include="Stored Procedures\SalesOrderSearch.sql" />
   </ItemGroup>
   <ItemGroup>

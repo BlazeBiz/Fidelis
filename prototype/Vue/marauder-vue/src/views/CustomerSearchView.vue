@@ -60,9 +60,13 @@
                         <div class="col">{{ c.paymentTerms }}</div>
                         <div class="col">{{c.GLLink}}</div>
                         <div class="col">
-                            <!-- TODO: font-awesome icons here -->
-                            <router-link :to="{ name: 'CustomerDetails', params: { id: c.customerId } }">view</router-link>
-                            | <router-link :to="{ name: 'CustomerEdit', params: { id: c.customerId } }">edit</router-link>
+                            <router-link :to="{ name: 'CustomerDetails', params: { id: c.customerId } }" title="View details">
+                                <font-awesome-icon icon="fa-solid fa-binoculars" />
+                            </router-link>
+                            &nbsp;
+                            <router-link :to="{ name: 'CustomerEdit', params: { id: c.customerId } }" title="Edit customer">
+                                <font-awesome-icon icon="fa-solid fa-pencil" />
+                            </router-link>
                         </div>
                     </template>
                 </template>

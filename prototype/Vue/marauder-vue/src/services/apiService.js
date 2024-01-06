@@ -36,7 +36,12 @@ export default {
     searchSalesOrders(searchField, searchType, searchValue) {
         return this.httpGetPromise(`${this.baseUrl}/salesOrders?searchField=${searchField}&searchType=${searchType}&searchValue=${searchValue}`);
     },
-
+    /************************************************************
+     * get Sales Order By Id
+     ***********************************************************/
+    getSalesOrderById(salesOrderId) {
+        return this.httpGetPromise(`${this.baseUrl}/salesorders/${salesOrderId}`);
+    },
 
     /************************************************************
      * getProjectByIdAndLink

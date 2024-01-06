@@ -10,7 +10,12 @@
   </template>
   <div v-else id="customer-details">
     <h1 v-if="isLoading" class="skeleton skeleton-text"></h1>
-    <h1 v-else>{{ customer.customerName }}</h1>
+    <h1 v-else>Customer: {{ customer.customerName }}</h1>
+
+    <router-link v-if="customer.customerId" :to="{ name: 'CustomerEdit', params: { id: customer.customerId } }" title="Edit customer">
+      <font-awesome-icon icon="fa-solid fa-pencil" /> Edit
+    </router-link>
+
     <section id="main-grid">
       <div class="gridtable standard-form gridlines" id="customer-form">
         <div class="col">Customer id:</div>
@@ -86,10 +91,6 @@
         </template>
       </div>
     </section>
-    <!-- =====================================================  -->
-    <br />
-    <router-link v-if="customer" :to="{ name: 'CustomerEdit', params: { id: customer.customerId } }">Edit
-      customer</router-link>
   </div>
 </template>
   

@@ -77,7 +77,9 @@
     </section>
     <section id="address-grid">
       <h2>Addresses</h2>
-      <a id="new-address-link" href="#" @click.prevent="newAddress">New address</a>
+      <a id="new-address-link" href="#" @click.prevent="newAddress" title="Add an address">
+        <font-awesome-icon icon="fa-solid fa-plus" /> New
+      </a>
       <div class="gridtable gridtable-6" id="address-table">
         <div class="col hdg">
           <p>Address</p>
@@ -117,14 +119,18 @@
               <input type="checkbox" v-model="add.shipToFlag" /> Shipping <br />
               <input type="checkbox" v-model="add.billToFlag" /> Billing
             </div>
-            <div class="col"><a href="#" @click.prevent="removeAddress(add)">remove</a></div>
+            <div class="col">
+              <a href="#" @click.prevent="removeAddress(add)" title="Remove address">
+                <font-awesome-icon icon="fa-regular fa-trash-can" />
+              </a>
+            </div>
           </template>
         </template>
       </div>
     </section>
-    <div>
-      <input type="button" value="Save" @click="save()">
-      <input type="button" value="Cancel" @click="reset()">
+    <div id="buttons-section">
+      <button type="button" @click="save()"><font-awesome-icon icon="fa-regular fa-floppy-disk" /> Save</button>
+      <button type="button" @click="reset()"><font-awesome-icon icon="fa-solid fa-ban" /> Cancel</button>
     </div>
   </div>
 </template>
@@ -288,6 +294,10 @@ a {
 h1 {
   font-style: italic;
   color: var(--heading-fg-2);
+}
+
+div#buttons-section {
+  margin-top: 10px;
 }
 
 @media screen and (max-width: 1200px) {

@@ -22,15 +22,18 @@
 
         <div id="resultsArea" v-if="showResults">
             <h1>Results</h1>
-            <div id="results-table" class="gridtable gridtable-5">
+            <div id="results-table" class="gridtable gridtable-6">
                 <div class="col hdg">
-                    Customer name
+                    Id
+                </div>
+                <div class="col hdg">
+                    Order number
                 </div>
                 <div class="col hdg">
                     Order date
                 </div>
                 <div class="col hdg">
-                    Sales order number
+                    Customer name
                 </div>
                 <div class="col hdg">
                     Customer PO number
@@ -46,23 +49,28 @@
                         <div class="col skeleton skeleton-text"></div>
                         <div class="col skeleton skeleton-text"></div>
                         <div class="col skeleton skeleton-text"></div>
+                        <div class="col skeleton skeleton-text"></div>
                     </template>
                 </template>
                 <template v-else>
                     <template v-for="ord in orders" :key="ord.customerId">
                         <div class="col">
-                            <router-link :to="{ name: 'CustomerDetails', params: { id: ord.customerId } }">
-                                {{ ord.customer.customerName }}
+                            <router-link :to="{ name: 'SalesOrderDetails', params: { id: ord.salesOrderId } }">
+                                {{ ord.salesOrderId }}
                             </router-link>
                         </div>
-                        <div class="col">{{ formatDate(ord.orderDate) }}</div>
                         <div class="col">{{ ord.salesOrderNumber }}</div>
+                        <div class="col">{{ formatDate(ord.orderDate) }}</div>
+                        <div class="col">{{ ord.customer.customerName }}</div>
                         <div class="col">{{ ord.customerPONumber }}</div>
                         <div class="col">
-                            <!-- TODO: font-awesome icons here -->
-                            <router-link
-                                :to="{ name: 'CustomerDetails', params: { id: ord.customerId } }">view</router-link>
-                            | <router-link :to="{ name: 'CustomerEdit', params: { id: ord.customerId } }">edit</router-link>
+                            <router-link :to="{ name: 'SalesOrderDetails', params: { id: ord.salesOrderId } }" title="View details">
+                                <font-awesome-icon icon="fa-solid fa-binoculars" />
+                            </router-link>
+                            &nbsp;
+                            <router-link :to="{ name: 'CustomerEdit', params: { id: ord.customerId } }" title="Edit sales order">
+                                <font-awesome-icon icon="fa-solid fa-pencil" />
+                            </router-link>
                         </div>
                     </template>
                 </template>

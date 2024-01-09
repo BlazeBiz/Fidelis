@@ -232,7 +232,7 @@ a.text-danger:hover, a.text-danger:focus {
 /*******************************************************/
 /* Font-awesome icon vue components */
 svg[data-icon] {
-    font-size: 1.3rem;
+    font-size: 1.3em;
 }
 
 /* i.far,

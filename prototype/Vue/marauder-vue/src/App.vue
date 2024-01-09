@@ -6,7 +6,8 @@
       <div>
         <img src="./assets/IronMarauder.png" alt="">
       </div>
-      <div>username</div>
+      <!-- TODO: User menu. Change user, user profile. Dummy tokens for different users? -->
+      <div id="user-button"><font-awesome-icon icon="fa-solid fa-circle-user" /> username</div>
     </header>
     <!-- NAV: Left-side links -->
     <!-- 
@@ -225,6 +226,11 @@ footer#footer {
   line-height: 1.5;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
     border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+div#user-button {
+  cursor: pointer;
+  font-size: 1.4em;
 }
 
 @media screen and (max-width: 768px) {

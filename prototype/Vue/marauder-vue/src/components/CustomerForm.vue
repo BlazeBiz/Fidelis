@@ -56,10 +56,6 @@
           <input type="text" name="customer-nbr" id="customer-nbr" v-model="customer.glLink">
         </div>
 
-
-
-
-
         <!-- Show created and modified information if it's an existing customer -->
         <template v-if="mode === 'edit'">
           <div class="col">Created on:</div>

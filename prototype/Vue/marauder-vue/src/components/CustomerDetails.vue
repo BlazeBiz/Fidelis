@@ -12,7 +12,8 @@
     <h1 v-if="isLoading" class="skeleton skeleton-text"></h1>
     <h1 v-else>Customer: {{ customer.customerName }}</h1>
 
-    <router-link v-if="customer.customerId" :to="{ name: 'CustomerEdit', params: { id: customer.customerId } }" title="Edit customer">
+    <router-link v-if="customer.customerId" :to="{ name: 'CustomerEdit', params: { id: customer.customerId } }"
+      title="Edit customer">
       <font-awesome-icon icon="fa-solid fa-pencil" /> Edit
     </router-link>
 
@@ -91,6 +92,17 @@
         </template>
       </div>
     </section>
+    <h2>Sales Orders</h2>
+    <router-link v-if="customer.customerId"
+      :to="{ name: 'SalesOrderSearch', query: { searchType: 'equals', searchField: 'customerId', searchValue: customer.customerId } }"
+      title="View sales orders for this customer">
+      <font-awesome-icon icon="fa-regular fa-rectangle-list" /> Show sales orders
+    </router-link>
+    <br />
+    <router-link v-if="customer.customerId" :to="{ name: 'SalesOrderNew', params: { customerId: customer.customerId } }"
+      title="Create a new sales order for customer">
+      <font-awesome-icon icon="fa-solid fa-cart-plus" /> New order
+    </router-link>
   </div>
 </template>
   

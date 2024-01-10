@@ -26,9 +26,21 @@ namespace MarauderServer.Controllers
             }
             searchField = searchField.Trim().ToLower();
             if (searchField != "salesordernumber" && searchField != "customerponumber" &&
-                 searchField != "customername" && searchField != "customernumber")
+                 searchField != "customername" && searchField != "customernumber" &&
+                searchField != "customerid")
             {
                 return BadRequest("searchField must be 'salesOrderNumber' or 'customerPONumber' or 'customerName' or 'customerNumber'");
+            }
+
+            // For lookup by customer id, make sure it's an integer and call the "ForCustomer" service method
+            if (searchField == "customerid")
+            {
+                int customerId;
+                if (!int.TryParse(searchValue, out customerId))
+                {
+                    return BadRequest("searchValue must be an integer when searchField is CustomerId.");
+                }
+                return Ok(salesOrderService.ListSalesOrdersForCustomer(customerId));
             }
 
             searchType = searchType.Trim().ToLower();

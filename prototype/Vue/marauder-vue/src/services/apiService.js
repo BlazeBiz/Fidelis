@@ -44,6 +44,28 @@ export default {
     },
 
     /************************************************************
+     * insert Sales Order
+     ***********************************************************/
+    insertSalesOrder(salesOrder) {
+        return this.httpPostPromise(`${this.baseUrl}/salesOrders`, salesOrder);
+    },
+
+    /************************************************************
+     * update Sales Order
+     ***********************************************************/
+    updateSalesOrder(salesOrder) {
+        return this.httpPutPromise(`${this.baseUrl}/salesOrders/${salesOrder.salesOrderId}`, salesOrder);
+    },
+
+
+
+
+
+
+
+
+
+    /************************************************************
      * getProjectByIdAndLink
      ***********************************************************/
     getProjectByIdAndLink(projectId, portfolioLink) {

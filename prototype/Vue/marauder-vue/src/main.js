@@ -9,11 +9,11 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /* import specific icons */
-import { faPlus, faBan, faBinoculars, faPencil, faCircleUser } from '@fortawesome/free-solid-svg-icons'
-import { faTrashCan, faFloppyDisk } from '@fortawesome/free-regular-svg-icons'
+import { faPlus, faBan, faBinoculars, faPencil, faCircleUser, faCartPlus } from '@fortawesome/free-solid-svg-icons'
+import { faTrashCan, faFloppyDisk, faRectangleList } from '@fortawesome/free-regular-svg-icons'
 
 /* add icons to the library */
-library.add(faPlus, faTrashCan, faFloppyDisk, faBan, faBinoculars, faPencil, faCircleUser);
+library.add(faPlus, faTrashCan, faFloppyDisk, faBan, faBinoculars, faPencil, faCircleUser, faCartPlus, faRectangleList);
 
 createApp(App)
     .use(router)

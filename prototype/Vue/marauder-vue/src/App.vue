@@ -104,7 +104,7 @@ export default {
             {
                 display: 'New sales order',
                 type: TYPES.ROUTE,
-                route: 'SalesOrderNew',
+                route: 'CustomerSearch',
               },
               {
                 display: 'Search sales orders',

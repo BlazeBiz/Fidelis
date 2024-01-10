@@ -67,6 +67,11 @@
                             <router-link :to="{ name: 'CustomerEdit', params: { id: c.customerId } }" title="Edit customer">
                                 <font-awesome-icon icon="fa-solid fa-pencil" />
                             </router-link>
+                            &nbsp;
+                            <router-link :to="{ name: 'SalesOrderNew', params: { id: c.customerId } }" title="New sales order for customer">
+                                <font-awesome-icon icon="fa-solid fa-cart-plus" />
+                            </router-link>
+
                         </div>
                     </template>
                 </template>

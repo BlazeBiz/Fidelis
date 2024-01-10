@@ -9,13 +9,17 @@
                     <option value="customerPONumber" selected>Customer PO number</option>
                     <option value="customerNumber" selected>Customer number</option>
                     <option value="customerName" selected>Customer name</option>
-                </select>&nbsp;
+                    <option value="customerId" selected>Customer id</option>
+                </select>
+                &nbsp;
                 <select name="searchType" id="searchType" v-model="searchType">
                     <option value="contains">Contains</option>
                     <option value="startsWith">Starts with</option>
                     <option value="equals">Equals</option>
-                </select>&nbsp;
-                <input type="search" name="searchValue" id="searchValue" v-model="searchValue" />&nbsp;
+                </select>
+                &nbsp;
+                <input type="search" name="searchValue" id="searchValue" v-model="searchValue" />
+                &nbsp;
                 <button type="button" @click="search">Find sales orders</button>
             </fieldset>
         </div>
@@ -64,11 +68,13 @@
                         <div class="col">{{ ord.customer.customerName }}</div>
                         <div class="col">{{ ord.customerPONumber }}</div>
                         <div class="col">
-                            <router-link :to="{ name: 'SalesOrderDetails', params: { id: ord.salesOrderId } }" title="View details">
+                            <router-link :to="{ name: 'SalesOrderDetails', params: { id: ord.salesOrderId } }"
+                                title="View details">
                                 <font-awesome-icon icon="fa-solid fa-binoculars" />
                             </router-link>
                             &nbsp;
-                            <router-link :to="{ name: 'CustomerEdit', params: { id: ord.customerId } }" title="Edit sales order">
+                            <router-link :to="{ name: 'SalesOrderEdit', params: { id: ord.salesOrderId } }"
+                                title="Edit sales order">
                                 <font-awesome-icon icon="fa-solid fa-pencil" />
                             </router-link>
                         </div>
@@ -100,10 +106,20 @@ export default {
     computed: {
     },
     methods: {
+        isNumeric(n) {
+            return !isNaN(parseInt(n)) && isFinite(n);
+        },
         search() {
             if (this.searchValue.length === 0) {
                 alert('Please specify a search value');
                 return;
+            }
+            if (this.searchField === 'customerId') {
+                if (!this.isNumeric(this.searchValue)) {
+                    alert('Customer Id must be an integer value');
+                    return;
+                }
+                this.searchType = 'equals';
             }
             this.isLoading = true;
             this.showResults = true;

@@ -1,10 +1,6 @@
 <template>
   <template v-if="error">
     <h1>Error</h1>
-    <!-- <div v-if="error?.err?.response?.status === 404">
-      <p>No customer with ID {{ customerId }} was found in the database.</p>
-    </div>
-    <div v-else> -->
     <p>{{ error.msg }}</p>
     <!-- </div> -->
   </template>
@@ -125,8 +121,8 @@
       </div>
     </section>
     <div id="buttons-section">
-      <button type="button" @click="save()"><font-awesome-icon icon="fa-regular fa-floppy-disk" /> Save</button>
-      <button type="button" @click="reset()"><font-awesome-icon icon="fa-solid fa-ban" /> Cancel</button>
+      <button type="button" id="save" @click="save()"><font-awesome-icon icon="fa-regular fa-floppy-disk" /> Save</button>
+      <button type="button" id="cancel" @click="reset()"><font-awesome-icon icon="fa-solid fa-ban" /> Cancel</button>
     </div>
   </div>
 </template>
@@ -201,12 +197,6 @@ export default {
     },
     formatDateTime(date) {
       return utility.formatDateTime(date);
-    },
-    addressHTML(add) {
-      let a = add.addressLine1;
-      if (add.addressLine2) a += "<br />" + add.addressLine2;
-      if (add.addressLine3) a += "<br />" + add.addressLine3;
-      return a;
     },
     newAddress() {
       if (!this.customer) return;
@@ -294,6 +284,14 @@ h1 {
 
 div#buttons-section {
   margin-top: 10px;
+}
+
+button#save svg {
+  color: rgb(22, 196, 22);
+}
+
+button#cancel svg {
+  color: red;
 }
 
 @media screen and (max-width: 1200px) {

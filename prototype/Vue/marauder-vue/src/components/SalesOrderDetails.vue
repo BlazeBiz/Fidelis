@@ -12,20 +12,20 @@
     <h1 v-if="isLoading" class="skeleton skeleton-text"></h1>
     <h1 v-else>Sales order: {{ salesOrder.salesOrderNumber }}</h1>
 
-    <!-- <router-link v-if="salesOrder.salesOrderId" :to="{ name: 'SalesOrderEdit', params: { id: salesOrder.salesOrderId } }" title="Edit salesOrder">
+    <router-link v-if="salesOrder?.salesOrderId" :to="{ name: 'SalesOrderEdit', params: { id: salesOrder.salesOrderId } }" title="Edit sales order">
       <font-awesome-icon icon="fa-solid fa-pencil" /> Edit
-    </router-link> -->
+    </router-link>
 
     <section id="main-grid">
       <div class="gridtable standard-form gridlines" id="salesOrder-form">
 
-        <div class="col">SalesOrder id:</div>
+        <div class="col">Sales Order id:</div>
         <div class="col" v-if="isLoading">
           <div class="skeleton skeleton-text"></div>
         </div>
         <div class="col" v-else>{{ salesOrder.salesOrderId }}</div>
 
-        <div class="col">SalesOrder number:</div>
+        <div class="col">Order number:</div>
         <div class="col" v-if="isLoading">
           <div class="skeleton skeleton-text"></div>
         </div>
@@ -35,7 +35,7 @@
         <div class="col" v-if="isLoading">
           <div class="skeleton skeleton-text"></div>
         </div>
-        <div class="col" v-else>{{ formatDateTime(salesOrder.orderDate) }}</div>
+        <div class="col" v-else>{{ formatDate(salesOrder.orderDate) }}</div>
 
 
         <!-- TODO: Status codes -->
@@ -149,6 +149,9 @@ export default {
           this.error = error;
         });
     },
+    formatDate(date) {
+      return utility.formatDate(date);
+    },
     formatDateTime(date) {
       return utility.formatDateTime(date);
     },
@@ -176,6 +179,7 @@ h1 {
   font-style: italic;
   color: var(--heading-fg-2);
 }
+
 h2 {
   margin-bottom: 0;
 }

@@ -11,7 +11,7 @@ namespace MarauderServer
             var builder = WebApplication.CreateBuilder(args);
 
             // Add CORS policy allowing any origin
-            // TODO: Allow onl;y specific origins
+            // TODO: Allow only specific origins
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",

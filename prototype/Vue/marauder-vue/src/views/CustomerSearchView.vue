@@ -27,9 +27,6 @@
                 <div class="col hdg">
                     Customer number
                 </div>
-                <!-- <div class="col col-center hdg"><img src="@/assets/images/GreenButton.png" /></div>
-      <div class="col col-center hdg"><img src="@/assets/images/AmberButton.png" /></div>
-      <div class="col col-center hdg"><img src="@/assets/images/RedButton.png" /></div> -->
                 <div class="col hdg">
                     Payment terms
                 </div>
@@ -58,9 +55,10 @@
                         </div>
                         <div class="col">{{ c.customerNumber }}</div>
                         <div class="col">{{ c.paymentTerms }}</div>
-                        <div class="col">{{c.GLLink}}</div>
+                        <div class="col">{{ c.GLLink }}</div>
                         <div class="col">
-                            <router-link :to="{ name: 'CustomerDetails', params: { id: c.customerId } }" title="View details">
+                            <router-link :to="{ name: 'CustomerDetails', params: { id: c.customerId } }"
+                                title="View details">
                                 <font-awesome-icon icon="fa-solid fa-binoculars" />
                             </router-link>
                             &nbsp;
@@ -68,19 +66,16 @@
                                 <font-awesome-icon icon="fa-solid fa-pencil" />
                             </router-link>
                             &nbsp;
-                            <router-link :to="{ name: 'SalesOrderNew', params: { id: c.customerId } }" title="New sales order for customer">
+                            <router-link :to="{ name: 'SalesOrderNew', params: { id: c.customerId } }"
+                                title="New sales order for customer">
                                 <font-awesome-icon icon="fa-solid fa-cart-plus" />
                             </router-link>
 
                         </div>
                     </template>
                 </template>
+                <div id="results-summary">{{ customers.length }} record{{ customers.length === 1 ? '' : 's' }} found.</div>
             </div>
-
-
-
-
-            <div id="results-summary">{{ customers.length }} record{{ customers.length === 1 ? '' : 's' }} found.</div>
         </div>
     </div>
 </template>
@@ -115,7 +110,7 @@ export default {
                 this.isLoading = false;
                 this.customers = resp.data;
                 // Update the route
-                this.$router.replace({name: 'CustomerSearch', query: { searchType: this.searchType, searchField: this.searchField, searchValue: this.searchValue}});
+                this.$router.replace({ name: 'CustomerSearch', query: { searchType: this.searchType, searchField: this.searchField, searchValue: this.searchValue } });
             });
         },
     },

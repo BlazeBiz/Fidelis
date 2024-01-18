@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[SalesOrderSearch]
+﻿CREATE PROCEDURE [viking].[SalesOrderSearch]
 	@searchField varchar(30),
 	@searchValue varchar(100)
 AS

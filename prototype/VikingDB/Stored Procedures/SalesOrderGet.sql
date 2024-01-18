@@ -1,5 +1,5 @@
 ﻿-- Get a single SalesOrder. Get the entire object graph
-CREATE PROCEDURE [dbo].[SalesOrderGet]
+CREATE PROCEDURE [viking].[SalesOrderGet]
 	@salesOrderId int
 AS
 
@@ -12,7 +12,7 @@ AS
 		DECLARE @customerId int 
 		SELECT @customerId = CustomerId FROM SalesOrder WHERE SalesOrderId = @salesOrderId;
 		-- Get Customer and CustomerAddress
-		exec CustomerGet @customerId
+		exec viking.CustomerGet @customerId
 
 	END
 RETURN 0

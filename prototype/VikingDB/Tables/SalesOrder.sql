@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[SalesOrder]
+﻿CREATE TABLE [viking].[SalesOrder]
 (
 	[SalesOrderId] INT NOT NULL PRIMARY KEY IDENTITY(1001, 1), 
     [SalesOrderNumber] VARCHAR(30) NULL, 
@@ -13,5 +13,5 @@
     [CreatedBy] INT NOT NULL, 
     [Modified] DATETIME NOT NULL DEFAULT getutcdate(), 
     [ModifiedBy] INT NOT NULL, 
-    CONSTRAINT [FK_SalesOrder_Customer] FOREIGN KEY (CustomerId) REFERENCES Customer(CustomerId)
+    CONSTRAINT [FK_SalesOrder_Customer] FOREIGN KEY (CustomerId) REFERENCES viking.Customer(CustomerId)
 )

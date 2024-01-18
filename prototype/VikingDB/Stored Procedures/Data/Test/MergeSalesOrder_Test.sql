@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[MergeSalesOrder_Test]
+﻿CREATE PROCEDURE [viking].[MergeSalesOrder_Test]
 AS
 SET NOCOUNT ON
 
@@ -33,7 +33,7 @@ BEGIN TRANSACTION
 ------------------------------------------------------------------------------------------------------------
 -- Merge SalesOrder
 ------------------------------------------------------------------------------------------------------------
-SET IDENTITY_INSERT SalesOrder ON
+SET IDENTITY_INSERT viking.SalesOrder ON
 MERGE INTO SalesOrder AS [Target]
 USING
  (SELECT * from @table) AS [Source]
@@ -56,7 +56,7 @@ WHEN NOT MATCHED BY TARGET THEN
 WHEN NOT MATCHED BY SOURCE AND Target.SalesOrderId <= 1000 THEN 
  DELETE
 ;
-SET IDENTITY_INSERT SalesOrder OFF
+SET IDENTITY_INSERT viking.SalesOrder OFF
 
 
 DECLARE @mergeError int, @mergeCount int, @tableName varchar(50)

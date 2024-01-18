@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[SalesOrderUpdate]
+﻿CREATE PROCEDURE [viking].[SalesOrderUpdate]
 	@salesOrderJSON nvarchar(max)
 AS
     Declare @userId INT = 1   -- Stub
@@ -49,7 +49,7 @@ Begin
     Commit Transaction
 
     -- Return the modified object
-    Exec dbo.SalesOrderGet @SalesOrderId
+    Exec viking.SalesOrderGet @SalesOrderId
 
     RETURN 0
 End

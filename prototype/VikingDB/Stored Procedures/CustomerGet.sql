@@ -1,5 +1,5 @@
 ﻿-- Get a single Customer. Get the entire object graph
-CREATE PROCEDURE [dbo].[CustomerGet]
+CREATE PROCEDURE [viking].[CustomerGet]
 	@customerId int
 AS
 

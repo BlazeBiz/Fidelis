@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[CustomerSearchByNbr]
+﻿CREATE PROCEDURE [viking].[CustomerSearchByNbr]
 	@searchValue varchar(100)
 AS
 	SELECT * 

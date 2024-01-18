@@ -68,7 +68,7 @@ namespace MarauderServer.Data
                 throw new Exception($"ListCustomers: Invalid search field: '{searchField}'");
             }
 
-            string proc = "SalesOrderSearch";
+            string proc = "viking.SalesOrderSearch";
             SqlCommand cmd = new SqlCommand(proc);
             cmd.CommandType = CommandType.StoredProcedure;
 
@@ -97,7 +97,7 @@ namespace MarauderServer.Data
         /// <returns>List of salesOrder objects for a salesOrder</returns>
         public IEnumerable<SalesOrder> ListSalesOrdersForCustomer(int customerId)
         {
-            SqlCommand cmd = new SqlCommand("SalesOrderListForCustomer");
+            SqlCommand cmd = new SqlCommand("viking.SalesOrderListForCustomer");
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@customerId", customerId);
             return GetList(cmd, "ListSalesOrdersForCustomer");
@@ -109,7 +109,7 @@ namespace MarauderServer.Data
         /// <returns>A salesOrder object, NULL if not found</returns>
         public SalesOrder? GetSalesOrder(int salesOrderId)
         {
-            SqlCommand cmd = new SqlCommand("SalesOrderGet");
+            SqlCommand cmd = new SqlCommand("viking.SalesOrderGet");
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@salesOrderId", salesOrderId);
             return this.GetObject(cmd, "GetSalesOrder");
@@ -117,7 +117,7 @@ namespace MarauderServer.Data
 
         public SalesOrder? UpdateSalesOrder(SalesOrder salesOrder)
         {
-            SqlCommand cmd = new SqlCommand("SalesOrderUpdate") { CommandType = CommandType.StoredProcedure };
+            SqlCommand cmd = new SqlCommand("viking.SalesOrderUpdate") { CommandType = CommandType.StoredProcedure };
             string json = System.Text.Json.JsonSerializer.Serialize<SalesOrder>(salesOrder);
             cmd.Parameters.AddWithValue("@salesOrderJSON", json);
 
@@ -126,7 +126,7 @@ namespace MarauderServer.Data
 
         public SalesOrder InsertSalesOrder(SalesOrder salesOrder)
         {
-            SqlCommand cmd = new SqlCommand("SalesOrderAdd") { CommandType = CommandType.StoredProcedure };
+            SqlCommand cmd = new SqlCommand("viking.SalesOrderAdd") { CommandType = CommandType.StoredProcedure };
             string json = System.Text.Json.JsonSerializer.Serialize<SalesOrder>(salesOrder);
             cmd.Parameters.AddWithValue("@salesOrderJSON", json);
 

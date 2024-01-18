@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[_MergeProductionData]
+﻿CREATE PROCEDURE [viking].[_MergeProductionData]
 AS
 Print '======================='
 Print 'Merging PRODUCTION data'

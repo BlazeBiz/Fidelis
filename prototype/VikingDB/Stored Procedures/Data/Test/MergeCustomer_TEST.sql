@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[MergeCustomer_Test]
+﻿CREATE PROCEDURE [viking].[MergeCustomer_Test]
 AS
 SET NOCOUNT ON
 
@@ -60,7 +60,7 @@ DELETE FROM CustomerAddress
 ------------------------------------------------------------------------------------------------------------
 -- Merge Customer
 ------------------------------------------------------------------------------------------------------------
-SET IDENTITY_INSERT Customer ON
+SET IDENTITY_INSERT viking.Customer ON
 MERGE INTO Customer AS [Target]
 USING
  (SELECT * from @table) AS [Source]
@@ -79,7 +79,7 @@ WHEN NOT MATCHED BY TARGET THEN
 WHEN NOT MATCHED BY SOURCE AND Target.CustomerId <= 1000 THEN 
  DELETE
 ;
-SET IDENTITY_INSERT Customer OFF
+SET IDENTITY_INSERT viking.Customer OFF
 
 
 DECLARE @mergeError int, @mergeCount int, @tableName varchar(50)
@@ -97,7 +97,7 @@ ELSE
 ------------------------------------------------------------------------------------------------------------
 -- Merge CustomerAddress
 ------------------------------------------------------------------------------------------------------------
-SET IDENTITY_INSERT CustomerAddress ON
+SET IDENTITY_INSERT viking.CustomerAddress ON
 MERGE INTO CustomerAddress AS [Target]
 USING
  (SELECT * from @addressTable) AS [Source]
@@ -124,7 +124,7 @@ WHEN NOT MATCHED BY TARGET THEN
 WHEN NOT MATCHED BY SOURCE AND Target.CustomerAddressId <= 1000 THEN 
  DELETE
 ;
-SET IDENTITY_INSERT CustomerAddress OFF
+SET IDENTITY_INSERT viking.CustomerAddress OFF
 
 
 SELECT @mergeError = @@ERROR, @mergeCount = @@ROWCOUNT, @tableName = '[CustomerAddress]'

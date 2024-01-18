@@ -52,10 +52,10 @@ namespace MarauderServer.Data
             searchField = searchField.ToLower();
             if (searchField == "customername")
             {
-                proc = "CustomerSearchByName";
+                proc = "viking.CustomerSearchByName";
             } else if (searchField == "customernumber")
             {
-                proc = "CustomerSearchByNbr";
+                proc = "viking.CustomerSearchByNbr";
             }
             else
             {
@@ -87,7 +87,7 @@ namespace MarauderServer.Data
         /// <returns>A Customer object, NULL if not found</returns>
         public Customer? GetCustomer(int customerId)
         {
-            SqlCommand cmd = new SqlCommand("CustomerGet");
+            SqlCommand cmd = new SqlCommand("viking.CustomerGet");
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@customerId", customerId);
             return this.GetObject(cmd, "GetCustomer");
@@ -95,7 +95,7 @@ namespace MarauderServer.Data
 
         public Customer? UpdateCustomer(Customer customer)
         {
-            SqlCommand cmd = new SqlCommand("CustomerUpdate") { CommandType = CommandType.StoredProcedure };
+            SqlCommand cmd = new SqlCommand("viking.CustomerUpdate") { CommandType = CommandType.StoredProcedure };
             string json = System.Text.Json.JsonSerializer.Serialize<Customer>(customer);
             cmd.Parameters.AddWithValue("@customerJSON", json);
 
@@ -104,7 +104,7 @@ namespace MarauderServer.Data
 
         public Customer InsertCustomer(Customer customer)
         {
-            SqlCommand cmd = new SqlCommand("CustomerAdd") { CommandType = CommandType.StoredProcedure };
+            SqlCommand cmd = new SqlCommand("viking.CustomerAdd") { CommandType = CommandType.StoredProcedure };
             string json = System.Text.Json.JsonSerializer.Serialize<Customer>(customer);
             cmd.Parameters.AddWithValue("@customerJSON", json);
 

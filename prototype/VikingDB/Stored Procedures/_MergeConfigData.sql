@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[_MergeConfigData]
+﻿CREATE PROCEDURE [viking].[_MergeConfigData]
 	@environment varchar(12) = ''
 AS
 --If @environment = ''

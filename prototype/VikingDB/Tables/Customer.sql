@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[Customer]
+﻿CREATE TABLE [viking].[Customer]
 (
 	[CustomerId] INT NOT NULL PRIMARY KEY IDENTITY(1001, 1), 
     [CustomerName] NVARCHAR(50) NOT NULL, 

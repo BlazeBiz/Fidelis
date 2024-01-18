@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[CustomerAdd]
+﻿CREATE PROCEDURE [viking].[CustomerAdd]
 	@customerJSON nvarchar(max)
 AS
     -- TODO
@@ -104,7 +104,7 @@ Begin
     Commit Transaction
 
     -- Return the modified object
-    Exec dbo.CustomerGet @CustomerId
+    Exec viking.CustomerGet @CustomerId
 
     RETURN 0
 End

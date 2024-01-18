@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[CustomerAddress]
+﻿CREATE TABLE [viking].[CustomerAddress]
 (
     [CustomerAddressId] INT NOT NULL PRIMARY KEY IDENTITY(1001, 1), 
     [CustomerId] INT NOT NULL, 
@@ -18,5 +18,5 @@
     [IsDeleted] BIT NOT NULL DEFAULT 0,
     [Deleted] DATETIME NULL,
     [DeletedBy] INT NULL, 
-    CONSTRAINT [FK_CustomerAddress_Customer] FOREIGN KEY (CustomerId) REFERENCES Customer(CustomerId)
+    CONSTRAINT [FK_CustomerAddress_Customer] FOREIGN KEY (CustomerId) REFERENCES viking.Customer(CustomerId)
 )

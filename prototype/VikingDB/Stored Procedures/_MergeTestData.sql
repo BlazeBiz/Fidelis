@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[_MergeTestData]
+﻿CREATE PROCEDURE [viking].[_MergeTestData]
 AS
 Print '================='
 Print 'Merging TEST data'
@@ -13,7 +13,7 @@ Print '================='
 	-- ------------------------------------------------------------------------------------------------------------
 	--	
 	-- MergeCustomer
-	Exec @returnValue = MergeCustomer_Test
+	Exec @returnValue = viking.MergeCustomer_Test
 	if @returnValue <> 0 return @returnValue
 
 	-- ------------------------------------------------------------------------------------------------------------
@@ -21,7 +21,7 @@ Print '================='
 	-- ------------------------------------------------------------------------------------------------------------
 	--	
 	-- MergeSalesOrder
-	Exec @returnValue = MergeSalesOrder_Test
+	Exec @returnValue = viking.MergeSalesOrder_Test
 	if @returnValue <> 0 return @returnValue
 
 	---- Show the results

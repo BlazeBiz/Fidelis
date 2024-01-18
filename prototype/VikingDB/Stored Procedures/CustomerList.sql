@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[CustomerList]
+﻿CREATE PROCEDURE [viking].[CustomerList]
 AS
 	SELECT * 
 	FROM Customer

@@ -21,14 +21,14 @@ Print 'Environment: $(Environment)'
 --Declare @edition varchar(100) = Cast( SERVERPROPERTY('Edition') As varchar(100))
 --Declare @isTest bit = Case WHEN CHARINDEX('Standard Edition', @edition) > 0 Or CHARINDEX('Express Edition', @edition) > 0 THEN 1 ELSE 0 END;
 
-Exec _MergeConfigData
+Exec viking._MergeConfigData
 
 --if @isTest = 1
 if '$(Environment)' = 'Test'
 BEGIN
-    Exec _MergeTestData
+    Exec viking._MergeTestData
 END
 if '$(Environment)' = 'Production'
 BEGIN
-    Exec _MergeProductionData
+    Exec viking._MergeProductionData
 END

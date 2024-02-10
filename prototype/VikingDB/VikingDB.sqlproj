@@ -64,6 +64,7 @@
     <Folder Include="Stored Procedures\Data\Test" />
     <Folder Include="Scripts" />
     <Folder Include="Schema" />
+    <Folder Include="Stored Procedures\Data\Production" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Customer.sql" />
@@ -71,9 +72,6 @@
     <Build Include="Tables\SalesOrder.sql" />
     <Build Include="Stored Procedures\CustomerList.sql" />
     <Build Include="Stored Procedures\Data\Test\MergeCustomer_Test.sql" />
-    <Build Include="Stored Procedures\_MergeTestData.sql" />
-    <Build Include="Stored Procedures\_MergeConfigData.sql" />
-    <Build Include="Stored Procedures\_MergeProductionData.sql" />
     <Build Include="Stored Procedures\CustomerGet.sql" />
     <Build Include="Stored Procedures\CustomerUpdate.sql" />
     <Build Include="Stored Procedures\CustomerAdd.sql" />
@@ -86,6 +84,11 @@
     <Build Include="Stored Procedures\CustomerSearchByNbr.sql" />
     <Build Include="Stored Procedures\SalesOrderSearch.sql" />
     <Build Include="Schema\viking.sql" />
+    <Build Include="Stored Procedures\Data\Production\MergeCustomer_Production.sql" />
+    <Build Include="Stored Procedures\Data\Production\MergeSalesOrder_Production.sql" />
+    <Build Include="Stored Procedures\Data\_MergeConfigData.sql" />
+    <Build Include="Stored Procedures\Data\Production\_MergeProductionData.sql" />
+    <Build Include="Stored Procedures\Data\Test\_MergeTestData.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="VikingDB.refactorlog" />

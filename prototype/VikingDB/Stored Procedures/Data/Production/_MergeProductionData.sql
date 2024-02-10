@@ -13,8 +13,16 @@ Print '======================='
 	-- ------------------------------------------------------------------------------------------------------------
 	--	
 	-- MergeCustomer
-	--Exec @returnValue = MergeCustomer_Test
-	--if @returnValue <> 0 return @returnValue
+	Exec @returnValue = viking.MergeCustomer_Production
+	if @returnValue <> 0 return @returnValue
+
+	-- ------------------------------------------------------------------------------------------------------------
+	-- MergeSalesOrder
+	-- ------------------------------------------------------------------------------------------------------------
+	--	
+	-- MergeSalesOrder
+	Exec @returnValue = viking.MergeSalesOrder_Production
+	if @returnValue <> 0 return @returnValue
 
 	---- Show the results
 	--Select * from _DataMergeResult

@@ -1,13 +1,13 @@
 <template>
   <div id="app-component">
     <!-- HEADER: Title Line across the top -->
-    <header id="header">
-      <div>{{ baseUrl }}</div>
+    <header id="header" class="lcr">
+      <div></div>
       <div>
         <img src="./assets/IronMarauder.png" alt="">
       </div>
       <!-- TODO: User menu. Change user, user profile. Dummy tokens for different users? -->
-      <div id="user-button"><font-awesome-icon icon="fa-solid fa-circle-user" /> username</div>
+      <div id="user-button"><font-awesome-icon icon="fa-solid fa-circle-user" />&nbsp;username</div>
     </header>
     <!-- NAV: Left-side links -->
     <!-- 
@@ -44,8 +44,10 @@
         <router-view />
       </div>
     </main>
-    <footer id="footer">
-      Copyright &copy; 2024 Blaze. All rights reserved.
+    <footer id="footer" class="lcr">
+      <div>Copyright &copy; 2024 Blaze. All rights reserved.</div>
+      <div>{{ (appMode === 'production' ? '' : appMode) }}</div>
+      <div>{{ (appMode === 'production' ? '' : baseUrl) }}</div>
     </footer>
   </div>
 </template>
@@ -69,6 +71,7 @@ export default {
   data() {
     return {
       baseUrl: import.meta.env.VITE_MARAUDER_API,
+      appMode: import.meta.env.MODE,
       navigation: {
         display: null,
         // display: 'TOP',
@@ -84,7 +87,7 @@ export default {
             type: TYPES.COLLECTION,
             state: STATES.EXPANDED,
             contents: [
-            {
+              {
                 display: 'New customer',
                 type: TYPES.ROUTE,
                 route: 'CustomerNew',
@@ -101,7 +104,7 @@ export default {
             type: TYPES.COLLECTION,
             state: STATES.EXPANDED,
             contents: [
-            {
+              {
                 display: 'New sales order',
                 type: TYPES.ROUTE,
                 route: 'CustomerSearch',
@@ -181,9 +184,6 @@ header#header {
   background-color: black;
   color: rgba(255, 255, 255, 0.8);
   padding: 0px 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   border-bottom: var(--main-gridlines);
 }
 
@@ -208,6 +208,30 @@ footer#footer {
   color: rgba(255, 255, 255, 0.8);
   border-top: var(--main-gridlines);
   padding: 5px 10px;
+}
+
+/* Left-Center-Right */
+.lcr {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+}
+
+.lcr>* {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.lcr> :nth-child(1) {
+  justify-content: flex-start;
+}
+
+.lcr> :nth-child(2) {
+  justify-content: center;
+}
+
+.lcr> :nth-child(3) {
+  justify-content: flex-end;
 }
 
 .nav-item {

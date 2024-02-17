@@ -4,11 +4,12 @@ import CustomerSearchView from '@/views/CustomerSearchView.vue';
 import AboutView from '@/views/AboutView.vue';
 import CustomerDetailsView from '@/views/CustomerDetailsView.vue';
 import CustomerEditView from '@/views/CustomerEditView.vue';
-import CustomerNewView from '@/views/CustomerNewView.vue';
+import CustomerCreateView from '@/views/CustomerCreateView.vue';
 import SalesOrderSearchView from '@/views/SalesOrderSearchView.vue';
 import SalesOrderDetailsView from '@/views/SalesOrderDetailsView.vue';
 import SalesOrderEditView from '@/views/SalesOrderEditView.vue';
 import SalesOrderNewView from '@/views/SalesOrderNewView.vue';
+import SalesOrderCreateView from '@/views/SalesOrderCreateView.vue';
 
 const APP_NAME = 'Marauder';
 const routes = [
@@ -50,8 +51,8 @@ const routes = [
     },
     {
         path: '/customer/new',
-        name: 'CustomerNew',
-        component: CustomerNewView,
+        name: 'CustomerCreate',
+        component: CustomerCreateView,
         meta: {
             requiresAuth: false,
             title: 'Add customer'
@@ -68,8 +69,8 @@ const routes = [
     },
     {
         path: '/customer/:id/new-order',
-        name: 'SalesOrderNew',
-        component: SalesOrderNewView,
+        name: 'SalesOrderCreate',
+        component: SalesOrderCreateView,
         meta: {
             requiresAuth: false,
             title: 'Add sales order'
@@ -91,6 +92,15 @@ const routes = [
         meta: {
             requiresAuth: false,
             title: 'Sales order details'
+        }
+    },
+    {
+        path: '/salesorder/new',
+        name: 'SalesOrderNew',
+        component: SalesOrderNewView,
+        meta: {
+            requiresAuth: false,
+            title: 'New sales order'
         }
     },
     {

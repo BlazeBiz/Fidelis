@@ -99,7 +99,7 @@
       <font-awesome-icon icon="fa-regular fa-rectangle-list" /> Show sales orders
     </router-link>
     <br />
-    <router-link v-if="customer.customerId" :to="{ name: 'SalesOrderNew', params: { customerId: customer.customerId } }"
+    <router-link v-if="customer.customerId" :to="{ name: 'SalesOrderCreate', params: { customerId: customer.customerId } }"
       title="Create a new sales order for customer">
       <font-awesome-icon icon="fa-solid fa-cart-plus" /> New order
     </router-link>

@@ -10,7 +10,7 @@
     components: {
       CustomerForm,
     },
-    name: "CustomerNewView",
+    name: "CustomerCreateView",
     data() {
       return {
       };

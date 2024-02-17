@@ -90,7 +90,7 @@ export default {
               {
                 display: 'New customer',
                 type: TYPES.ROUTE,
-                route: 'CustomerNew',
+                route: 'CustomerCreate',
               },
               {
                 display: 'Search customers',
@@ -107,7 +107,7 @@ export default {
               {
                 display: 'New sales order',
                 type: TYPES.ROUTE,
-                route: 'CustomerSearch',
+                route: 'SalesOrderNew',
               },
               {
                 display: 'Search sales orders',

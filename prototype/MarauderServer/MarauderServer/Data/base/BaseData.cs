@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Options;
 
 namespace MarauderServer.Data
 {
@@ -43,6 +44,35 @@ namespace MarauderServer.Data
             return list;
         }
 
+        // From https://learn.microsoft.com/en-us/sql/connect/ado-net/configurable-retry-logic-sqlclient-introduction?view=sql-server-ver16, create and open
+        // a new conneciton using configurable retry logic. Since the Azure SQL Free tier goes into auto-pause, the connection times out if it hasn't been
+        // used for an hour. Hoping that this retry logic fails the first time, then succeeds on the retry.
+        private SqlConnection GetNewConnection() //SqlRetryLogicBaseProvider GetRetryProvider()
+        {
+            // Define the retry logic parameters
+            var options = new SqlRetryLogicOption()
+            {
+                // Number of times before throwing an exception
+                NumberOfTries = 3,
+                // Preferred gap time to delay before retry
+                DeltaTime = TimeSpan.FromSeconds(1),
+                // Maximum gap time for each delay time before retry
+                MaxTimeInterval = TimeSpan.FromSeconds(10)
+            };
+
+            // Create a retry logic provider
+            SqlRetryLogicBaseProvider provider = SqlConfigurableRetryFactory.CreateExponentialRetryProvider(options);
+
+            // Create a new connection
+            SqlConnection conn = new(connectionString);
+
+            // Set the retry logic provider on the connection instance
+            conn.RetryLogicProvider = provider;
+            // Establishing the connection will retry if a transient failure occurs.
+            conn.Open();
+            return conn;
+        }
+
         /// <summary>
         /// Given a command, executes the sql and gets a data reader. The reader is then passed to the readerProcesFunction, which defaults to just reading rows and creating objects.
         /// </summary>
@@ -56,8 +86,7 @@ namespace MarauderServer.Data
             List<T> list;
             try
             {
-                using SqlConnection conn = new(connectionString);
-                conn.Open();
+                using SqlConnection conn = GetNewConnection();
                 cmd.Connection = conn;
                 SqlDataReader rdr = cmd.ExecuteReader();
                 list = readerProcessFunction(rdr);
@@ -76,8 +105,7 @@ namespace MarauderServer.Data
         {
             try
             {
-                using SqlConnection conn = new(connectionString);
-                conn.Open();
+                using SqlConnection conn = GetNewConnection();
                 cmd.Connection = conn;
                 return Convert.ToInt32(cmd.ExecuteScalar());
             }
@@ -103,8 +131,7 @@ namespace MarauderServer.Data
             int returnValue = 0;
             try
             {
-                using SqlConnection conn = new(connectionString);
-                conn.Open();
+                using SqlConnection conn = GetNewConnection();
                 conn.InfoMessage += (object sender, SqlInfoMessageEventArgs e) =>
                 {
                     printOutput += e.Message;

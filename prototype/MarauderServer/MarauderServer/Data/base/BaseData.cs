@@ -63,17 +63,17 @@ namespace MarauderServer.Data
             //// Create a retry logic provider
             //SqlRetryLogicBaseProvider provider = SqlConfigurableRetryFactory.CreateExponentialRetryProvider(options);
 
-            // Create a new connection
-            SqlConnection conn = new(connectionString);
-
-            // Set the retry logic provider on the connection instance
-            //conn.RetryLogicProvider = provider;
-            // Establishing the connection will retry if a transient failure occurs.
-
             int tryNumber = 1;
             const int maxTries = 3;
             while (true)
             {
+                // Create a new connection
+                SqlConnection conn = new(connectionString);
+
+                // Set the retry logic provider on the connection instance
+                //conn.RetryLogicProvider = provider;
+                // Establishing the connection will retry if a transient failure occurs.
+
                 try
                 {
                     conn.Open();
@@ -83,6 +83,7 @@ namespace MarauderServer.Data
                 {
                     if (tryNumber < maxTries)
                     {
+                        conn.Dispose();
                         tryNumber++;
                     }
                     else

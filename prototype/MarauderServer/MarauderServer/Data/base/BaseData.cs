@@ -49,28 +49,48 @@ namespace MarauderServer.Data
         // used for an hour. Hoping that this retry logic fails the first time, then succeeds on the retry.
         private SqlConnection GetNewConnection() //SqlRetryLogicBaseProvider GetRetryProvider()
         {
-            // Define the retry logic parameters
-            var options = new SqlRetryLogicOption()
-            {
-                // Number of times before throwing an exception
-                NumberOfTries = 3,
-                // Preferred gap time to delay before retry
-                DeltaTime = TimeSpan.FromSeconds(1),
-                // Maximum gap time for each delay time before retry
-                MaxTimeInterval = TimeSpan.FromSeconds(10)
-            };
+            //// Define the retry logic parameters
+            //var options = new SqlRetryLogicOption()
+            //{
+            //    // Number of times before throwing an exception
+            //    NumberOfTries = 3,
+            //    // Preferred gap time to delay before retry
+            //    DeltaTime = TimeSpan.FromSeconds(1),
+            //    // Maximum gap time for each delay time before retry
+            //    MaxTimeInterval = TimeSpan.FromSeconds(10)
+            //};
 
-            // Create a retry logic provider
-            SqlRetryLogicBaseProvider provider = SqlConfigurableRetryFactory.CreateExponentialRetryProvider(options);
+            //// Create a retry logic provider
+            //SqlRetryLogicBaseProvider provider = SqlConfigurableRetryFactory.CreateExponentialRetryProvider(options);
 
             // Create a new connection
             SqlConnection conn = new(connectionString);
 
             // Set the retry logic provider on the connection instance
-            conn.RetryLogicProvider = provider;
+            //conn.RetryLogicProvider = provider;
             // Establishing the connection will retry if a transient failure occurs.
-            conn.Open();
-            return conn;
+
+            int tryNumber = 1;
+            const int maxTries = 3;
+            while (true)
+            {
+                try
+                {
+                    conn.Open();
+                    return conn;
+                }
+                catch (SqlException ex)
+                {
+                    if (tryNumber < maxTries)
+                    {
+                        tryNumber++;
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
         }
 
         /// <summary>

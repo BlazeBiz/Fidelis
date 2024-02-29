@@ -34,9 +34,7 @@
                 </div>
                 <!-- Action column only if this isn't a selectable list -->
                 <div class="col hdg" v-if="isSelectable()"></div>
-                <div v-else>
-                    Actions
-                </div>
+                <div class="col hdg" v-else>Actions</div>
                 <!-- **************** Skeleton ************************ -->
                 <template v-if="isLoading">
                     <template v-for="n in 3" :key="n">
@@ -138,7 +136,7 @@ export default {
             this.$router.push({ name: this.selectAction?.route, params: { id: this.selectedCustomer?.customerId } })
         },
         onRowClick(customer) {
-            if (this.isSelectable()){
+            if (this.isSelectable()) {
                 this.selectedCustomer = customer;
             }
         },

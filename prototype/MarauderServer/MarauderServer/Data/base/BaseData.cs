@@ -44,50 +44,40 @@ namespace MarauderServer.Data
             return list;
         }
 
-        // From https://learn.microsoft.com/en-us/sql/connect/ado-net/configurable-retry-logic-sqlclient-introduction?view=sql-server-ver16, create and open
-        // a new conneciton using configurable retry logic. Since the Azure SQL Free tier goes into auto-pause, the connection times out if it hasn't been
-        // used for an hour. Hoping that this retry logic fails the first time, then succeeds on the retry.
-        private SqlConnection GetNewConnection() //SqlRetryLogicBaseProvider GetRetryProvider()
+        // Create and open a new connection using retry logic. Since the Azure SQL Free tier goes into auto-pause,
+        // the connection times out if it hasn't been used for an hour. This logic tries up to maxTries times, with a delay of
+        // secondsBetweenTries seconds between each try.
+        private SqlConnection GetNewConnection()
         {
-            //// Define the retry logic parameters
-            //var options = new SqlRetryLogicOption()
-            //{
-            //    // Number of times before throwing an exception
-            //    NumberOfTries = 3,
-            //    // Preferred gap time to delay before retry
-            //    DeltaTime = TimeSpan.FromSeconds(1),
-            //    // Maximum gap time for each delay time before retry
-            //    MaxTimeInterval = TimeSpan.FromSeconds(10)
-            //};
-
-            //// Create a retry logic provider
-            //SqlRetryLogicBaseProvider provider = SqlConfigurableRetryFactory.CreateExponentialRetryProvider(options);
-
+            // Establish defaults for retries and wait times
             int tryNumber = 1;
-            const int maxTries = 3;
+            const int maxTries = 6;
+            const int secondsBetweenTries = 5;
             while (true)
             {
                 // Create a new connection
                 SqlConnection conn = new(connectionString);
 
-                // Set the retry logic provider on the connection instance
-                //conn.RetryLogicProvider = provider;
-                // Establishing the connection will retry if a transient failure occurs.
-
+                // Try to establish a connection
                 try
                 {
                     conn.Open();
+                    // If the open succeeds, exit the loop by returning from the method
                     return conn;
                 }
                 catch (SqlException ex)
                 {
+                    // Failed to connect (probably a timeout while SQL Server is resuming). Wait and then retry.
+                    Console.WriteLine($"Failed to connect to database on try # {tryNumber}. Message: {ex.Message}");
                     if (tryNumber < maxTries)
                     {
                         conn.Dispose();
                         tryNumber++;
+                        System.Threading.Thread.Sleep(secondsBetweenTries * 1000);
                     }
                     else
                     {
+                        // maxTries reached - don't retry any more, throw the error
                         throw;
                     }
                 }

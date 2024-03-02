@@ -2,21 +2,18 @@
     <div>
         <h1>Home</h1>
         <p>
-            Welcome to Iron Marauder, a sample application. The demo is intended to illustrate some
-            concepts and techniques around building a full-stack application with a .NET API backend and
-            Vue.js with JavaScript in the frontend, deployed in Azure and running against an
-            Azure SQL database.
-        </p>
-        <p>
-            <strong>Note:</strong> This application uses the Azure SQL Serverless Free tier. One of the features
-            of this, which can't be disabled, is the <em>auto-pause</em> feature. If there is no activity against the
-            database for an hour, Azure SQL <em>pauses</em> the database. The first time the application tries to open a
-            connection after this, Azure SQL must <em>resume</em> the database. This can take up to a minute, so it
-            typically results in a connection timeout error. The API has retry logic to recover from the timeout and
-            connect, but you'll notice a long delay the first time the application hits the database after a time
-            of inactivity.
-        </p>
+            Welcome to Iron Marauder, a sample application. The demo is intended to illustrate some concepts and
+            techniques around building a full-stack application.<br />
+            You can find more information, including a link to the source code, on the 
+            <router-link :to="{name: 'About'}">About page</router-link>.
+            </p>
         <h2>Database status</h2>
+        <p>
+            After a time of inactivity, the first connection to the database <em>may take up to a minute</em>. See the 
+            <router-link :to="{name: 'About'}">About page</router-link>.
+            for details. 
+        </p>
+        <hr />
         <p class="db-status" v-if="isLoading">
             <font-awesome-icon icon="fa-solid fa-rotate" class="fa-spin" />
             Connecting to the database...

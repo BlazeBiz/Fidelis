@@ -89,6 +89,7 @@
     <Build Include="Stored Procedures\Data\_MergeConfigData.sql" />
     <Build Include="Stored Procedures\Data\Production\_MergeProductionData.sql" />
     <Build Include="Stored Procedures\Data\Test\_MergeTestData.sql" />
+    <Build Include="Stored Procedures\StatisticsGet.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="VikingDB.refactorlog" />

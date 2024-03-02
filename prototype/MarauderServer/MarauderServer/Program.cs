@@ -55,14 +55,17 @@ namespace MarauderServer
             string connectionString = builder.Configuration.GetConnectionString("Default");
 
             // Setup dependency injection so services and DAOs automatically get created when a controler fires
+
             // DAOs
             builder.Services.AddSingleton<CustomerAddressData, CustomerAddressData>(sp => new CustomerAddressData(connectionString));
             builder.Services.AddSingleton<CustomerData, CustomerData>(sp => new CustomerData(connectionString, sp.GetRequiredService<CustomerAddressData>()));
             builder.Services.AddSingleton<SalesOrderData, SalesOrderData>(sp => new SalesOrderData(connectionString, sp.GetRequiredService<CustomerData>()));
-            //Services
+            builder.Services.AddSingleton<StatisticsData, StatisticsData>(sp => new StatisticsData(connectionString));
 
+            //Services
             builder.Services.AddSingleton<CustomerService, CustomerService>(sp => new CustomerService(sp.GetRequiredService<CustomerData>()));
             builder.Services.AddSingleton<SalesOrderService, SalesOrderService>(sp => new SalesOrderService(sp.GetRequiredService<SalesOrderData>()));
+            builder.Services.AddSingleton<StatisticsService, StatisticsService>(sp => new StatisticsService(sp.GetRequiredService<StatisticsData>()));
         }
     }
 }

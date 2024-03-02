@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Options;
 
 namespace MarauderServer.Data
 {
@@ -73,7 +70,7 @@ namespace MarauderServer.Data
                     {
                         conn.Dispose();
                         tryNumber++;
-                        System.Threading.Thread.Sleep(secondsBetweenTries * 1000);
+                        Thread.Sleep(secondsBetweenTries * 1000);
                     }
                     else
                     {

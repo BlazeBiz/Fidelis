@@ -54,14 +54,17 @@ export default {
         // This may be where the problem is...when we create the date, what timezone is it?
         if (!date) return "";
         let d = new Date(date);
-        // let d = new Date(Date.parse(date + "+00:00"));
         return d.toLocaleDateString([], this.dateOptions);
     },
 
-    formatDateTime(date) {
+    formatDateTime(date, timeIsUTC = true) {
         if (!date) return "";
-        // let d = new Date(date);
-        let d = new Date(Date.parse(date + "+00:00"));
+        let d;
+        if (timeIsUTC) {
+            d = new Date(Date.parse(date + "+00:00"));
+        } else {
+            d = date;
+        }
         return d.toLocaleDateString([], this.dateOptions) + " " + d.toLocaleTimeString([], this.timeOptions);
     },
 
@@ -159,4 +162,3 @@ export default {
         return base64;
     }
 }
-

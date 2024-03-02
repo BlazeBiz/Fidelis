@@ -4,6 +4,13 @@ export default {
     baseUrl: import.meta.env.VITE_MARAUDER_API,
 
     /************************************************************
+     * Get DB statistics (row counts)
+     ***********************************************************/
+    getStatistics() {
+        return this.httpGetPromise(`${this.baseUrl}/statistics`);
+    },
+
+    /************************************************************
      * Search Customers
      ***********************************************************/
     searchCustomers(searchField, searchType, searchValue) {

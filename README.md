@@ -76,6 +76,10 @@ The Marauder client is a  web application built on `Vue.js`. It's a single-page
 
 The Marauder client uses the Axios library to issue requests to the
 
+## Source Code
+
+<table><tbody><tr><td>Client</td><td>prototype/Vue/marauder-vue</td><td>A Vue 3.0 project. Open this folder in VSCode with appropriate extensions installed.</td></tr><tr><td>API Server</td><td>prototype/MarauderServer/MarauderServer.sln</td><td>A VS 2022 solution. It contains a Web API project and a Database project.</td></tr><tr><td>Database</td><td>prototype/VikingDB/VikingDB.sqlproj</td><td>Azure SQL schema and stored procedures.</td></tr></tbody></table>
+
 ## Hosting and deployment
 
 ### Database
